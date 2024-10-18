@@ -50,20 +50,20 @@ public class ejercicio2 {
 			 * Asi mismo los que sobran despues de la formacion
 			 */
 			case cuadrado:
-				int contador=0;
-				while (soldadosUsados + (filas + 1) <= soldados) {
-					filas++;
-					soldadosUsados += filas;
-				}
-				for (int i=filas-1; i>0; i--) {
-					for (int j=filas-1;j>0;j--){
-						System.out.print("*");
-						contador++;
-					}
-					System.out.println();
-				}
-				sobrantes = soldados - contador;
-				System.out.println("Han sobrado "+sobrantes+" figuras");
+		                filas = (int) Math.sqrt(soldados);
+		                soldadosUsados = filas * filas;
+		            
+		                // Imprimimos el cuadrado
+		                for (int i = 0; i < filas; i++) {
+		                    for (int j = 0; j < filas; j++) {
+		                        System.out.print("*");
+		                    }
+		                    System.out.println();
+		                }
+		            
+		                // Calculamos los sobrantes
+		                sobrantes = soldados - soldadosUsados;
+		                System.out.println("Han sobrado " + sobrantes + " figuras");
 				break;
 			/**
 			 * Se muestan los * en forma de triangulo

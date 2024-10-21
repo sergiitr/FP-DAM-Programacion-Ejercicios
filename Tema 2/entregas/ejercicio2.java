@@ -9,13 +9,13 @@ public class ejercicio2 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
-		final int lineal = 1;
-		final int cuadrado = 2;
-		final int triangulo = 3;
-		
+		final int LINEAL = 1;
+		final int CUADRADO = 2;
+		final int TRIANGULO = 3;
+		final String ASTERICOS = "*";
+		String ESPACIOS = " ";
 		int soldados,sobrantes=0,soldadosUsados=0,filas=0;
 		int forma;
-		
 
 		/**
 		 * Se introduce el numero de soldados 
@@ -28,12 +28,13 @@ public class ejercicio2 {
 		/**
 		 * Se introduce la forma
 		 */
-		System.out.println("1 - lineal");
-		System.out.println("2 - cuadrado");
-		System.out.println("3 - triangulo");
-		System.out.println("Introduzca forma: ");
-		forma = sc.nextInt();
-
+		do{
+			System.out.println("1 - lineal");
+			System.out.println("2 - cuadrado");
+			System.out.println("3 - triangulo");
+			System.out.println("Introduzca forma: ");
+			forma = sc.nextInt();
+		} while (forma<1 || forma>3);
 		/**
 		 * Se hace un switch para cada formacion que se pide
 		 */
@@ -41,46 +42,52 @@ public class ejercicio2 {
 			/**
 			 * Se muestra los * seguidos
 			 */
-			case lineal:
+			case LINEAL:
 				for (int i=0;i<soldados; i++)
-					System.out.print("*");
+					System.out.print(ASTERICOS);
 				break;
 			/**
 			 * Se muestan los * en forma de cuadrado
 			 * Asi mismo los que sobran despues de la formacion
 			 */
-			case cuadrado:
-		                filas = (int) Math.sqrt(soldados);
-		                soldadosUsados = filas * filas;
-		            
-		                // Imprimimos el cuadrado
-		                for (int i = 0; i < filas; i++) {
-		                    for (int j = 0; j < filas; j++) {
-		                        System.out.print("*");
-		                    }
-		                    System.out.println();
-		                }
-		            
-		                // Calculamos los sobrantes
-		                sobrantes = soldados - soldadosUsados;
-		                System.out.println("Han sobrado " + sobrantes + " figuras");
+			case CUADRADO:
+				filas = (int) Math.sqrt(soldados);
+				soldadosUsados = filas * filas;
+			
+				// Imprimimos el cuadrado
+				for (int i=0; i<filas; i++) {
+					for (int j=0; j<filas; j++)
+						System.out.print(ASTERICOS);
+					System.out.println();
+				}
+			
+				// Calculamos los sobrantes
+				sobrantes = soldados - soldadosUsados;
+				System.out.println("Han sobrado " + sobrantes + " figuras");
 				break;
 			/**
 			 * Se muestan los * en forma de triangulo
 			 * Asi mismo los que sobran despues de la formacion
 			 */
-			case triangulo:
+			case TRIANGULO:
 				while (soldadosUsados + (filas + 1) <= soldados) {
 					filas++;
 					soldadosUsados += filas;
 				}
-				for (int i=filas; i>=0; i--) {
-					for (int j=i;j>0;j--)
-						System.out.print("*");
+
+				// Se va mostrando los * dependiendo las filas en la que esté
+				for (int i = 0; i < filas; i++) {
+					// Imprimir espacios
+					for (int j = 0; j < i; j++)
+						System.out.print(ESPACIOS);
+					// Imprimir asteriscos
+					for (int j=(filas-i);j>0;j--)
+						System.out.print(ASTERICOS+" ");
 					System.out.println();
 				}
+    
 				sobrantes = soldados - soldadosUsados;
-				System.out.println("Han sobrado "+sobrantes+" figuras");
+				System.out.println("Han sobrado " + sobrantes + " figuras");
 				break;
 			default:
 				System.out.println("Figura no valida");

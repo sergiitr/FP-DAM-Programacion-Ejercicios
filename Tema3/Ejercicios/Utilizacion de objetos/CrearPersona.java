@@ -84,18 +84,31 @@ public class CrearPersona{
     public static void main(String[] args) {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d/MM/uuuu");
         
+        /**
+         * Hacemos la Persona 1
+         * Tendra los datos del constructor por defecto
+         */
         System.out.println("--- Datos Persona 1 ---");
         Persona p1 = new Persona();
         System.out.println(p1.getNombre());
         System.out.println(p1.getApellidos());
         System.out.println(p1.getfNac().format(formatoFecha).toString());
 
+        /**
+         * Hacemos la Persona 2
+         * Tendra los datos del constructor de copia 
+         */
         System.out.println("\n--- Datos Persona 2 ---");
         LocalDate fechaPrueba2=LocalDate.of(2001, 07, 02);
         Persona p2 = new Persona("Sergio","Trillo",fechaPrueba2);
         System.out.println(p2.getNombre());
         System.out.println(p2.getApellidos());
         System.out.println(p2.getfNac().format(formatoFecha).toString());
+
+        /**
+         * Hacemos la Persona 3
+         * Tendra los datos del constructor de copia 
+         */
         System.out.println("\n--- Datos Persona 3 ---");
         LocalDate fechaPrueba=LocalDate.of(2024, 12, 12);
         Persona p3 = new Persona("Prueba2","Apellidos2",fechaPrueba);
@@ -103,8 +116,13 @@ public class CrearPersona{
         System.out.println(p3.getApellidos());
         System.out.println(p3.getfNac().format(formatoFecha).toString());
 
-
+        /**
+         * Mostramos los resultados
+         */
         System.out.println("\n --- Resultados ---");
+        /**
+         * Comprobamos con el 1er comparador (comparador ==)
+         */
         System.out.println("-- Comparador ");
         System.out.println("Comparamos p1 y p2");
         if (p1.comparador(p2) == true)
@@ -118,7 +136,9 @@ public class CrearPersona{
         else
             System.out.println("Los objetos son distintos");
 
-
+        /**
+         * Comprobamos con el 1er comparador (comparador isEquals)
+         */
         System.out.println("\n-- Comparador2 ");
         System.out.println("Comparamos p1 y p2");
         if (p1.comparador2(p2) == true)
@@ -132,14 +152,18 @@ public class CrearPersona{
         else
             System.out.println("Los objetos son distintos");
 
-        // Ponemos que la persona 1 tenga los atributos que la persona 2
+        /**
+         * Ponemos que la persona 1 tenga los atributos que la persona 2
+         */
         System.out.println("\n\nAsociamos p2 a p1");
         p1 = p2;
         System.out.println("Mostramos los nuevos datos de p1");
         System.out.println(p2.getNombre());
         System.out.println(p2.getApellidos());
         System.out.println(p2.getfNac().format(formatoFecha).toString());
-
+        /**
+         * Comprobamos con el 1er comparador (comparador ==)
+         */
         System.out.println("\n-- Comparador ");
         System.out.println("Comparamos p1 y p2");
         if (p1.comparador(p2) == true)
@@ -153,6 +177,9 @@ public class CrearPersona{
         else
             System.out.println("Los objetos son distintos");
 
+        /**
+         * Comprobamos con el 2o comparador (comparador isEquals)
+         */
         System.out.println("\n-- Comparador2 ");
         System.out.println("Comparamos p1 y p2");
         if (p1.comparador2(p2) == true)

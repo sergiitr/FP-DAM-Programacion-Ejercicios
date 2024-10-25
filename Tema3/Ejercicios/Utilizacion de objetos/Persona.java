@@ -12,7 +12,10 @@ class Persona {
     }
 
     /**
-     * Constructor de copia
+     * Constructor de copia para el ejercicio 3
+     * @param nombre
+     * @param apellidos
+     * @param fnac
      */
     public Persona(String nombre, String apellidos, LocalDate fnac){
         this.nombre=nombre;
@@ -20,6 +23,11 @@ class Persona {
         this.fNac=fnac;
     }
     
+    /**
+     * Constructor de copia para el ejercicio 4
+     * @param nombre
+     * @param apellidos
+     */
     public Persona(String nombre, String apellidos){
         this.nombre=nombre;
         this.apellidos=apellidos;

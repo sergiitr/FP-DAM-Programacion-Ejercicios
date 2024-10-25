@@ -20,6 +20,11 @@ class Persona {
         this.fNac=fnac;
     }
     
+    public Persona(String nombre, String apellidos){
+        this.nombre=nombre;
+        this.apellidos=apellidos;
+    }
+
     /**
      * Comprobamos si ambos objetos son iguales o no con ==
      * @param p2 de tipo Persona

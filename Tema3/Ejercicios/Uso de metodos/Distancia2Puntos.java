@@ -1,10 +1,16 @@
 public class Distancia2Puntos {
+    /**
+     * Contructor x defecto
+     */
     public Distancia2Puntos() {
         this.x1 = 2;
         this.x2 = 1;
         this.y1 = 2;
         this.y2 = 1;
     }
+    /**
+     * Constructor de copia
+     */
     public Distancia2Puntos(int x1, int x2, int y1, int y2) {
         this.x1 = x1;
         this.x2 = x2;
@@ -35,6 +41,10 @@ public class Distancia2Puntos {
     public void setY2(int y2) {
         this.y2 = y2;
     }
+    /**
+     * Se devuelve la distancia entre ambos puntos
+     * @return distancia
+     */
     public float distancia(){
         float solucion;
         solucion=(float)Math.sqrt( Math.pow((x2-x1), 2) + Math.pow((y2-y1), 2) );

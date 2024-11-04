@@ -1,9 +1,15 @@
 public class Empleado {
+    /**
+     * Constructor por defecto
+     */
     public Empleado() {
         this.nombre = "Sergio";
         this.apellido = "Trillo";
         this.sueldo = 1200;
     }
+    /**
+     * Constructor de copia
+     */
     public Empleado(String nombre, String apellido, int sueldo) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -27,9 +33,10 @@ public class Empleado {
     public void setSueldo(int sueldo) {
         this.sueldo = sueldo;
     }
-
-    
-
+    /**
+     * Se sobrescribe el metodo toString() para que 
+     * salgan los parametros indicados en el ejercicio
+     */
     @Override
     public String toString() {
         return nombre + "\t\t" + apellido + "\t\t" + sueldo + "€";

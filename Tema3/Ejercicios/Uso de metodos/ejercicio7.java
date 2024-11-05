@@ -1,3 +1,4 @@
+import java.awt.geom.Line2D;
 import java.util.Scanner;
 public class ejercicio7 {
     public static void main(String[] args) {
@@ -23,7 +24,7 @@ public class ejercicio7 {
         a1=sc.nextInt();
         a2=sc.nextInt();
 
-        System.out.println("Introduzca coordenadas (x,y) del pnto A:");
+        System.out.println("Introduzca coordenadas (x,y) del pnto B:");
         b1=sc.nextInt();
         b2=sc.nextInt();
 
@@ -31,6 +32,11 @@ public class ejercicio7 {
         d3.setX2(a2);
         d3.setY1(b1);
         d3.setY2(b2);
-        System.out.println("La distancia es: "+d3.distancia()+"cm"); 
+        System.out.println("La distancia es: "+d3.distancia()+"cm");
+
+        // Cálculo usando Line2D
+        Line2D.Double line = new Line2D.Double(a1, b1, a2, b2);
+        double distanciaLine2D = line.getP1().distance(line.getP2());
+        System.out.println("Distancia calculada usando Line2D: " + distanciaLine2D);
     }
 }

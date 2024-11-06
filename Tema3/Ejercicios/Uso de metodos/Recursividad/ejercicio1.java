@@ -15,6 +15,12 @@ public class ejercicio1 {
         System.out.println("El mcd("+a+","+b+")="+mcd(a,b));
     }
 
+    /**
+     * Se crea una funcion para crear el mcd de dos numeros
+     * @param x
+     * @param y
+     * @return el mcd de ambos numeros
+     */
     public static int mcd(int x, int y) {
         if (x==0)
             return y;

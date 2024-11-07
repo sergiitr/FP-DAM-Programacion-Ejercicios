@@ -1,16 +1,21 @@
-class Cilindro {
+public class Cilindro {
     /**
      * Valor de PI
      */
     public final double PI = 3.14;
 
     /**
-     * Constructores
+     * Constructores por defecto
      */
     public Cilindro() {
         this.altura=2;
         this.radio=2;
     }
+    /**
+     * Constructor de copia
+     * @param altura
+     * @param radio
+     */
     public Cilindro(int altura, int radio) {
         this.altura = altura;
         this.radio = radio;
@@ -56,10 +61,11 @@ class Cilindro {
 
     /**
      * Metodo toString
+     * Se muestra la altura, el radio, la superficie y el volumen del cilindro
      */
     @Override
     public String toString() {
-        return "Cilindro [altura=" + altura + "cm, radio=" + radio + "cm, Superficie=" + getSuperficie() + "cm2, Volumen=" + getVolumen() + "cm3]";
+        return "Cilindro [\n   altura=" + altura + "cm,\n   radio=" + radio + "cm,\n   Superficie=" + getSuperficie() + "cm2,\n   Volumen=" + getVolumen() + "cm3\n]";
     }
 
     /**

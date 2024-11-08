@@ -1,7 +1,19 @@
 public class EcuacionesLineales {
+    /**
+     * Constructor x defecto
+     */
     public EcuacionesLineales() {
+        this.a = 1;
+        this.b = 1;
+        this.c = 1;
+        this.d = 1;
+        this.e = 1;
+        this.f = 1;
     }
 
+    /**
+     * Constructor de copia
+     */
     public EcuacionesLineales(int a, int b, int c, int d, int e, int f) {
         this.a = a;
         this.b = b;
@@ -60,6 +72,27 @@ public class EcuacionesLineales {
     }
 
     /**
+     * Comparamos dos ecuaciones lineales son iguales o no
+     * @return true si son iguales, false si no son iguales
+     */
+    @Override
+    public boolean equals(Object o) {
+        if(this==o)
+            return true;
+        if(o==null) 
+            return false;
+        if(getClass()!=o.getClass())
+            return false;
+
+        EcuacionesLineales eq = (EcuacionesLineales) o;
+        if (this.a==eq.a && this.b==eq.b && this.c==eq.c && this.d==eq.d && this.e==eq.e && this.f==eq.f)
+            return true;
+        else
+            return false;
+    }
+
+
+    /**
      * Comprobamos si la ecuacion tiene solucion o no
      * @return true si tiene solucion, false si no tiene
      */
@@ -81,7 +114,6 @@ public class EcuacionesLineales {
             return this.x;
         } else
             return -1;
-
     }
 
     /**
@@ -119,5 +151,4 @@ public class EcuacionesLineales {
     private int f;
     private int x;
     private int y;
-
 }

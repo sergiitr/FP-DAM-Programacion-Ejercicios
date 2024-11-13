@@ -1,3 +1,6 @@
+/**
+ * @author Sergio Trillo Rodriguez
+ */
 public class EcuacionesLineales {
     /**
      * Constructor x defecto

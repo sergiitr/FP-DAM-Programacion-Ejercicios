@@ -1,4 +1,5 @@
 /**
+ * Clase EcuacionesLineales
  * @author Sergio Trillo Rodriguez
  */
 public class EcuacionesLineales {

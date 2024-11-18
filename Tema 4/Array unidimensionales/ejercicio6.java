@@ -1,41 +1,82 @@
+import java.util.Random;
+import java.util.Scanner;
+
 public class ejercicio6 {
     public static void main(String[] args) {
-        int[] arrayPrimero = {3,6,1,8,9};
-        int[] arraySegundo = {5,3,5,4,10,7,1};
+        Scanner sc = new Scanner(System.in);
+        Random r = new Random();
+        int tam1, tam2;
+        System.out.println("introduce el tamaño del arrayPrimero: ");
+        tam1 = sc.nextInt();
+        System.out.println("introduce el tamaño del arraySegundo: ");
+        tam2 = sc.nextInt();
+        
+        int[] arrayPrimero = new int[tam1];
+        int[] arraySegundo = new int[tam2];
 
+        for (int i=0; i<tam1; i++)
+            arrayPrimero[i] = r.nextInt();
+        
+        for (int i=0; i<tam2; i++)
+            arraySegundo[i] = r.nextInt();
+        
         final int LONGITUD_COMBINADO = arrayPrimero.length + arraySegundo.length;
         int[] arrayCombinado = new int[LONGITUD_COMBINADO];
 
-        /**
-         * Posiciones pares del arrayCombinado (0,2,4,6) para el arrayPrimero
-         */
-        int j=0;
-        for (int i=0; i<arrayPrimero.length;i++) {
-            arrayCombinado[j] = arrayPrimero[i];
-            j+=2;
+        if (arraySegundo.length > arrayPrimero.length) {
+            // Asignar elementos de arrayPrimero en las posiciones pares de arrayCombinado
+            int j = 0;
+            for (int i = 0; i < arrayPrimero.length; i++) {
+                arrayCombinado[j] = arrayPrimero[i];
+                j += 2;
+            }
+
+            // Asignar elementos de arraySegundo en las posiciones impares de arrayCombinado
+            int k = 1;
+            for (int i = 0; i < arrayPrimero.length; i++) {
+                arrayCombinado[k] = arraySegundo[i];
+                k += 2;
+            }
+
+            // Asignar los elementos restantes de arraySegundo en las posiciones libres
+            for (int i = (arrayPrimero.length * 2); i < arrayCombinado.length; i++) 
+                arrayCombinado[i] = arraySegundo[i - arrayPrimero.length];
+        } else {
+            // Asignar elementos de arraySegundo en las posiciones impares de arrayCombinado
+            int k = 1;
+            for (int i = 0; i < arraySegundo.length; i++) {
+                arrayCombinado[k] = arraySegundo[i];
+                k += 2;
+            }
+
+            // Asignar elementos de arrayPrimero en las posiciones pares de arrayCombinado
+            int j = 0;
+            for (int i = 0; i < arraySegundo.length; i++) {
+                arrayCombinado[j] = arrayPrimero[i];
+                j += 2;
+            }
+
+            // Asignar los elementos restantes de arrayPrimero en las posiciones libres
+            for (int i = (arraySegundo.length * 2); i < arrayCombinado.length; i++) 
+                arrayCombinado[i] = arrayPrimero[i - arraySegundo.length];
         }
 
-        /**
-         * Posiciones impares del arrayCombinado (1,3,5,7) para el arraySegundo
-         */
-        int k=1;
-        for (int i=0; i<arrayPrimero.length;i++) {
-            arrayCombinado[k] = arraySegundo[i];
-            k+=2;
-        }
+        //array1
+        System.out.print("arrayPrimero[");
+        for (int i = 0; i < tam1; i++) 
+            System.out.print(arrayPrimero[i] + " ");
+        System.out.println("]");
 
-        /**
-         * Como faltan asignar las posiciones arrayCombinado[10] y arrayCombinado[11]
-         * que son las posiciones arraySegundo[5] y arraySegundo[5] las asignamos
-         */
-        for (int i=((arrayPrimero.length*2));i<arrayCombinado.length;i++){
-            arrayCombinado[i]=arraySegundo[i-5];
-        }
-
-
+        //array2
         System.out.print("arrayCombinado[");
-        for (int i=0;i<LONGITUD_COMBINADO;i++)
-            System.out.print(arrayCombinado[i]+" ");
+        for (int i = 0; i < tam2; i++) 
+            System.out.print(arraySegundo[i] + " ");
+        System.out.println("]");
+
+        // Mostrar el array combinado
+        System.out.print("arrayCombinado[");
+        for (int i = 0; i < LONGITUD_COMBINADO; i++) 
+            System.out.print(arrayCombinado[i] + " ");
         System.out.println("]");
     }
 }

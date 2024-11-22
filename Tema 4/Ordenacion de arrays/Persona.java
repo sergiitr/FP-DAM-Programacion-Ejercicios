@@ -8,17 +8,14 @@ class Persona {
     }
 
     /**
-     * Constructor de copia para el ejercicio 3
+     * Constructor de copia
      * @param nombre
-     * @param apellidos
-     * @param fnac
+     * @param edad
      */
     public Persona(String nombre, int edad){
         this.nombre=nombre;
         this.edad=edad;
     }
-
-    
 
     /**
      * Ponemos los setters de los parametros

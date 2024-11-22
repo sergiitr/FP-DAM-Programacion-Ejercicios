@@ -3,32 +3,51 @@ import java.util.Scanner;
 public class ejercicio2 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int[] vectorNotas = new int[10];
-        final int N = vectorNotas.length;
+        Persona[] persona = new Persona[10];
+        final int N = persona.length;
+        for (int i=0;i<N;i++)
+            persona[i] = new Persona();
         
-        System.out.println("Introduce 10 notas:");
+        String[] nombre = new String[10];
+        System.out.println("Introduce los nombre ");
         for (int i=0; i<N; i++) {
-            System.out.print("Nota "+(i+1)+":");
-            vectorNotas[i] = sc.nextInt();
+            System.out.println("Persona "+(i+1)+": ");
+            nombre[i]=sc.nextLine();
         }
-        System.out.print("Nuestro vector es: [");
-        for (int i=0; i<N; i++)
-            System.out.print(vectorNotas[i]+" ");
-        System.out.println("]");
+        for (int i=0; i<N; i++) 
+            persona[i].setNombre(nombre[i]);
+        
 
-        int aux=0;
+        System.out.println("Introduce la edad ");
+        int edad;
+        for (int i=0; i<N; i++) {
+            System.out.println("Persona "+(i+1)+": ");
+            edad=sc.nextInt();
+            persona[i].setEdad(edad);
+        }
+
+        System.out.println("Vector antes:");
+        for (Persona i:persona) {
+            System.out.println("Nombre: "+i.getNombre());
+            System.out.println("Edad: "+i.getEdad());
+            System.out.println();
+        }
+
+
+        Persona aux = new Persona();
         for (int i = 0; i < N-1; i++) 
             for (int j = 0; j < N-i-1; j++) 
-                if(vectorNotas[j] < vectorNotas[j+1]){
-                    aux=vectorNotas[j+1];
-                    vectorNotas[j+1]=vectorNotas[j];
-                    vectorNotas[j]=aux;
+                if(persona[j].getEdad() < persona[j+1].getEdad()){
+                    aux=persona[j];
+                    persona[j]=persona[j+1];
+                    persona[j+1]=aux;
                 }
-        
-        System.out.print("Nuestro vector ordenado de mayor a menor es: [");
-        for (int i:vectorNotas)
-            System.out.print(i+" ");
-        System.out.println("]");
+
+        System.out.println("Vector despues:");
+        for (Persona i:persona) {
+            System.out.println("Nombre: "+i.getNombre());
+            System.out.println("Edad: "+i.getEdad());
+            System.out.println();
+        }
     }
 }
-

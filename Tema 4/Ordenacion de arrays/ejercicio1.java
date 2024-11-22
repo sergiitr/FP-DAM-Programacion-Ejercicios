@@ -9,24 +9,23 @@ public class ejercicio1 {
             estudiante[i] = new Estudiante();
         
         String[] nombre = new String[10];
-        System.out.println("Introduce los nombre ");
+        System.out.println("--- Introduce los nombres ---");
         for (int i=0; i<N; i++) {
-            System.out.println("estudiante "+(i+1)+": ");
+            System.out.print("Estudiante "+(i+1)+": ");
             nombre[i]=sc.nextLine();
         }
         for (int i=0; i<N; i++) 
             estudiante[i].setNombre(nombre[i]);
         
-
-        System.out.println("Introduce la nota ");
+        System.out.println("--- Introduce las notas ---");
         int nota;
         for (int i=0; i<N; i++) {
-            System.out.println("Persona "+(i+1)+": ");
+            System.out.print("Estudiante "+(i+1)+": ");
             nota=sc.nextInt();
             estudiante[i].setNota(nota);
         }
 
-        System.out.println("\nNuestro vector antes de ordenarlo es: ");
+        System.out.println("\n--- Nuestro vector antes de ordenarlo es ---");
         for (int i=0; i<N; i++){
             System.out.println("Nombre estudiante "+(i+1)+": "+estudiante[i].getNombre());
             System.out.println("Nota estudiante "+(i+1)+": "+estudiante[i].getNota());
@@ -42,8 +41,8 @@ public class ejercicio1 {
                     estudiante[j+1]=aux;
                 }
         
-        System.out.print("Nuestro vector ordenado de menor a mayor es: ");
-        for (int i=0; i<N; i++){
+        System.out.println("--- Nuestro vector ordenado de menor a mayor es ---");
+        for (int i=0; i<N; i++) {
             System.out.println("Nombre estudiante "+(i+1)+": "+estudiante[i].getNombre());
             System.out.println("Nota estudiante "+(i+1)+": "+estudiante[i].getNota());
             System.out.println();

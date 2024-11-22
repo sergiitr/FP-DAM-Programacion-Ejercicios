@@ -3,31 +3,50 @@ import java.util.Scanner;
 public class ejercicio1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int[] vectorNotas = new int[10];
-        final int N = vectorNotas.length;
+        Estudiante[] estudiante = new Estudiante[10];
+        final int N = estudiante.length;
+        for (int i=0;i<N;i++)
+            estudiante[i] = new Estudiante();
         
-        System.out.println("Introduce 10 notas:");
+        String[] nombre = new String[10];
+        System.out.println("Introduce los nombre ");
         for (int i=0; i<N; i++) {
-            System.out.print("Nota "+(i+1)+":");
-            vectorNotas[i] = sc.nextInt();
+            System.out.println("estudiante "+(i+1)+": ");
+            nombre[i]=sc.nextLine();
         }
-        System.out.print("Nuestro vector es: [");
-        for (int i=0; i<N; i++)
-            System.out.print(vectorNotas[i]+" ");
-        System.out.println("]");
+        for (int i=0; i<N; i++) 
+            estudiante[i].setNombre(nombre[i]);
+        
 
-        int aux=0;
+        System.out.println("Introduce la nota ");
+        int nota;
+        for (int i=0; i<N; i++) {
+            System.out.println("Persona "+(i+1)+": ");
+            nota=sc.nextInt();
+            estudiante[i].setNota(nota);
+        }
+
+        System.out.println("\nNuestro vector antes de ordenarlo es: ");
+        for (int i=0; i<N; i++){
+            System.out.println("Nombre estudiante "+(i+1)+": "+estudiante[i].getNombre());
+            System.out.println("Nota estudiante "+(i+1)+": "+estudiante[i].getNota());
+            System.out.println();
+        }
+
+        Estudiante aux = new Estudiante();
         for (int i = 0; i < N-1; i++) 
             for (int j = 0; j < N-i-1; j++) 
-                if(vectorNotas[j] > vectorNotas[j+1]){
-                    aux=vectorNotas[j];
-                    vectorNotas[j]=vectorNotas[j+1];
-                    vectorNotas[j+1]=aux;
+                if(estudiante[j].getNota() > estudiante[j+1].getNota()){
+                    aux=estudiante[j];
+                    estudiante[j]=estudiante[j+1];
+                    estudiante[j+1]=aux;
                 }
         
-        System.out.print("Nuestro vector ordenado de menor a mayor es: [");
-        for (int i=0; i<N; i++)
-            System.out.print(vectorNotas[i]+" ");
-        System.out.println("]");
+        System.out.print("Nuestro vector ordenado de menor a mayor es: ");
+        for (int i=0; i<N; i++){
+            System.out.println("Nombre estudiante "+(i+1)+": "+estudiante[i].getNombre());
+            System.out.println("Nota estudiante "+(i+1)+": "+estudiante[i].getNota());
+            System.out.println();
+        }
     }
 }

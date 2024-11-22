@@ -8,10 +8,9 @@ public class Estudiante {
     }
 
     /**
-     * Constructor de copia para el ejercicio 3
+     * Constructor de copia
      * @param nombre
-     * @param apellidos
-     * @param fnac
+     * @param nota
      */
     public Estudiante(String nombre, int nota){
         this.nombre=nombre;

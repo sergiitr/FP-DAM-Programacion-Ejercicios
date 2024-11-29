@@ -4,9 +4,8 @@ public class ejercicio1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         final int TOTAL_EMPLEADOS=10;
-        int totalEmpleados=0;
+        int opcion,totalEmpleados=0;
         Empleado[] empleado=new Empleado[TOTAL_EMPLEADOS];
-        int opcion;
         String dni;
         double edadMedia=0;
 
@@ -18,7 +17,7 @@ public class ejercicio1 {
         do {
             System.out.println("Introduduzca valor: ");
             opcion=sc.nextInt();
-
+            sc.nextLine();
             switch (opcion) {
                 case 1:
                     if (totalEmpleados<TOTAL_EMPLEADOS) {
@@ -27,12 +26,12 @@ public class ejercicio1 {
                         System.out.print("Introduzca apellidos: ");
                         intApellidos = sc.nextLine();
                         do {
-                            System.out.println("Introduce el DNI:");
+                            System.out.print("Introduce el DNI: ");
                             intDNI = sc.nextLine();
                         } while (intDNI.length() != 9);
                         System.out.print("Introduce la edad: ");
                         intEdad = sc.nextInt();
-                        System.out.println("Introduce el sueldo");
+                        System.out.print("Introduce el sueldo: ");
                         intSueldo = sc.nextInt();
                         empleado[totalEmpleados] = new Empleado(intDNI,intNombre,intApellidos,intEdad,intSueldo);
                         totalEmpleados++;
@@ -56,13 +55,11 @@ public class ejercicio1 {
                         System.out.println("Introduzca un dni: ");
                         dni=sc.nextLine();
                         for (int i=0; i<totalEmpleados;i++) {
-                            if (empleado[i].getDni().equals(dni)) {
+                            if (empleado[i].getDni().equals(dni)) 
                                 System.out.println(empleado[i].toString());
-                            } 
                         }
                     }
                     break;
-
                 case 4:
                     int aux=0;
                     if (totalEmpleados==0)
@@ -107,7 +104,7 @@ public class ejercicio1 {
                         dni=sc.nextLine();
                         for (int i=0; i<totalEmpleados;i++) {
                             if (empleado[i].getDni().equals(dni)) {
-                                System.out.print("Introduce el nuevo nombre: ");
+                                System.out.print("Introduce la nueva edad: ");
                                 nuevaEdad=sc.nextInt();
                                 empleado[i].setEdad(nuevaEdad);
                             } 
@@ -123,7 +120,7 @@ public class ejercicio1 {
                         dni=sc.nextLine();
                         for (int i=0; i<totalEmpleados;i++) {
                             if (empleado[i].getDni().equals(dni)) {
-                                System.out.print("Introduce el nuevo nombre: ");
+                                System.out.print("Introduce el nuevo sueldo: ");
                                 nuevoSueldo=sc.nextInt();
                                 empleado[i].setEdad(nuevoSueldo);
                             } 
@@ -136,9 +133,8 @@ public class ejercicio1 {
                     else {
                         Empleado empleadoAUX = new Empleado();
                         for (int i=0; i<totalEmpleados;i++) {
-                            if (empleadoAUX.getSueldo()<=empleado[i].getSueldo()) {
+                            if (empleadoAUX.getSueldo()<=empleado[i].getSueldo()) 
                                 empleadoAUX=empleado[i];
-                            }
                         }
                         System.out.println("Los datos del empleado con mayor sueldo es:");
                         System.out.println(empleadoAUX.toString());

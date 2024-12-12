@@ -59,7 +59,6 @@ public class Helper {
 
         if( (iban.charAt(0) != 'E') || (iban.charAt(1) != 'S') )
             return false;
-        
 
         for (int i=0;i<LONGITUD; i++) {
             if ( iban.charAt(i) == '_')
@@ -85,27 +84,57 @@ public class Helper {
         return true;
     }
 
+    /**
+     * Comprobamos el telefono
+     * @param tlfn
+     * @return true si está bien, false si está mal
+     */
     public static boolean comprobarTelefono(String tlfn) {
         final int LONGITUD = tlfn.length();
         if ( tlfn.charAt(0)=='+' && Character.getNumericValue(tlfn.charAt(1))==3 && Character.getNumericValue(tlfn.charAt(2))==4) {
-            if ( LONGITUD != 12 ) 
+            if ( LONGITUD != 12 )
                 return false;
-            
-            if ( Character.getNumericValue(tlfn.charAt(3))!=6 || Character.getNumericValue(tlfn.charAt(3))!=7 || Character.getNumericValue(tlfn.charAt(3))!=9 ) 
+            if ( Character.getNumericValue(tlfn.charAt(3))!=6 && Character.getNumericValue(tlfn.charAt(3))!=7 && Character.getNumericValue(tlfn.charAt(3))!=9 ) 
                 return false;
-        }
+            return true;
+        } else if (Character.getNumericValue(tlfn.charAt(0))==6 || Character.getNumericValue(tlfn.charAt(0))==7 || Character.getNumericValue(tlfn.charAt(0))==9) {
+            if (LONGITUD != 9) 
+                return false;
+        } else 
+            return false;
         return true;
     }
 
+    public static boolean comprobarFechas(String fecha) {
+        final int LONGITUD = fecha.length();
+
+        if (LONGITUD != 10) 
+            return false;
+        
+        for (int i=0; i<LONGITUD;i++) {
+            if (i==2 || i==5) {
+                if (fecha.charAt(i)!='/' && fecha.charAt(i)!='-') 
+                    return false;            
+            } else if (i!=2 && i!=5) {
+                if (Character.getNumericValue(fecha.charAt(i)) != 0 && Character.getNumericValue(fecha.charAt(i)) != 1 && Character.getNumericValue(fecha.charAt(i)) != 2 && Character.getNumericValue(fecha.charAt(i)) != 3 && Character.getNumericValue(fecha.charAt(i)) != 4 &&  
+                    Character.getNumericValue(fecha.charAt(i)) != 5 && Character.getNumericValue(fecha.charAt(i)) != 6 && Character.getNumericValue(fecha.charAt(i)) != 7 && Character.getNumericValue(fecha.charAt(i)) != 8 && Character.getNumericValue(fecha.charAt(i)) != 9 )
+                        return false;
+            }
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
         String dni="26518076L";
         String pasaporte="ABC123456";
         String iban="ES91 21 0004 1845 02 00051332";
-        String tlfn="+34622481916";
-        System.out.println(Helper.comprobarDNI(dni));
-        System.out.println(Helper.comprobarPasaporte(pasaporte));
-        System.out.println(Helper.comprobarIBAN(iban));
-        System.out.println(Helper.comprobarTelefono(tlfn));
+        String tlfn="622481916";
+        String fecha="02-07-2001";
+
+        System.out.println("DNI: "+Helper.comprobarDNI(dni));
+        System.out.println("Pasaporte: "+Helper.comprobarPasaporte(pasaporte));
+        System.out.println("IBAN: "+Helper.comprobarIBAN(iban));
+        System.out.println("Telefono: "+Helper.comprobarTelefono(tlfn));
+        System.out.println("Fecha: "+Helper.comprobarFechas(fecha));
     }
 }

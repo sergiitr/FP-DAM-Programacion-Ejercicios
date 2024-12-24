@@ -76,14 +76,7 @@ El programa debe implementar las siguientes clases y records:
 - Se utiliza la clase `Random` para determinar a quién le toca cada turno:
   ```java
   Random random = new Random();
-  int turno = random.nextInt(2); // 0 para jugador, 1 para Artorias
+  int turno = random.nextInt(4); // 1 para Artorias, el resto para el jugador
   ```
 - Si la `vidaActual` de cualquiera de los personajes llega a 0, el juego termina mostrando el mensaje:
   **"Fin de la partida"**.
-
----
-
-## Instrucciones Finales
-
-1. Junta todas las clases y records en un único fichero dejando como pública únicamente la clase `Partida`.
-2. Renombra la clase y el fichero con las iniciales de tus apellidos y tu nombre. Por ejemplo: **CAOscar.java**.

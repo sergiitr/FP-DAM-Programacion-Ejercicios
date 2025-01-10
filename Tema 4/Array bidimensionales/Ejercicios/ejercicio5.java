@@ -45,18 +45,23 @@ public class ejercicio5 {
         
 
         mostrarMatriz(matriz,fil,col);
-        int contador=0;
-        for (int i=0;i<fil; i++) {
-            for (int j=0;j<col;j++) {
-                if (matriz[i][j].equals(guion) ) {
-                    contador++;
+        if (victoria(matriz)==true) {
+            System.out.println("Victoria humano");
+        } else {
+
+            int contador=0;
+            for (int i=0;i<fil; i++) {
+                for (int j=0;j<col;j++) {
+                    if (matriz[i][j].equals(guion) ) {
+                        contador++;
+                    }
                 }
             }
+            if(contador==0)
+                finPartida();
+            else
+                turnoMaquina(matriz, fil, col);
         }
-        if(contador==0)
-            finPartida();
-        else
-            turnoMaquina(matriz, fil, col);
     }
 
     public static void finPartida() {
@@ -74,19 +79,44 @@ public class ejercicio5 {
             matriz[fila][columna] = "o ";
         }
         mostrarMatriz(matriz,fil,col);
-        int contador=0;
-        for (int i=0;i<fil; i++) {
-            for (int j=0;j<col;j++) {
-                if (matriz[i][j].equals(guion) ) {
-                    contador++;
+        
+        if (victoria(matriz)==true) {
+            System.out.println("Victoria maquina");
+        } else {
+            int contador=0;
+            for (int i=0;i<fil; i++) {
+                for (int j=0;j<col;j++) {
+                    if (matriz[i][j].equals(guion) ) {
+                        contador++;
+                    }
                 }
             }
+            if(contador==0)
+                finPartida();
+            else
+                turnoHumano(matriz, fil, col);
         }
-        if(contador==0)
-            finPartida();
-        else
-            turnoHumano(matriz, fil, col);
     }
+
+
+    public static boolean victoria(String[][] matriz) {
+        if(( matriz[0][0]=="x " && matriz[0][1]=="x " && matriz[0][2]=="x " ) || ( matriz[1][0]=="x " && matriz[1][1]=="x " && matriz[1][2]=="x " ) ||
+           ( matriz[2][0]=="x " && matriz[2][1]=="x " && matriz[2][2]=="x " ) || ( matriz[0][0]=="x " && matriz[1][0]=="x " && matriz[2][0]=="x " ) ||
+           ( matriz[0][1]=="x " && matriz[1][1]=="x " && matriz[2][1]=="x " ) || ( matriz[1][2]=="x " && matriz[1][2]=="x " && matriz[2][2]=="x " ) ||
+           ( matriz[0][0]=="x " && matriz[1][1]=="x " && matriz[2][2]=="x " ) || ( matriz[0][2]=="x " && matriz[1][1]=="x " && matriz[2][0]=="x " ) ) {
+            return true;
+          } else if ( ( matriz[0][0]=="o " && matriz[0][1]=="o " && matriz[0][2]=="o " ) || ( matriz[1][0]=="o " && matriz[1][1]=="o " && matriz[1][2]=="o " ) || 
+                      ( matriz[2][0]=="o " && matriz[2][1]=="o " && matriz[2][2]=="o " ) || ( matriz[0][0]=="o " && matriz[1][0]=="o " && matriz[2][0]=="o " ) || 
+                      ( matriz[0][1]=="o " && matriz[1][1]=="o " && matriz[2][1]=="o " ) || ( matriz[1][2]=="o " && matriz[1][2]=="o " && matriz[2][2]=="o " ) || 
+                      ( matriz[0][0]=="o " && matriz[1][1]=="o " && matriz[2][2]=="o " ) || ( matriz[0][2]=="o " && matriz[1][1]=="o " && matriz[2][0]=="o " ) ){
+            return true;
+        }else{
+
+              return false;
+          }
+
+    }
+
 
     public static void main(String[] args) {
         final int FILAS=3;

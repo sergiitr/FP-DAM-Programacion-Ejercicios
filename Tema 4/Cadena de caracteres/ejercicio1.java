@@ -1,32 +1,30 @@
 import java.util.Scanner;
 
-public class ejercicio1 { 
+public class ejercicio1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String frase;
-
         System.out.print("Introduzca la frase: ");
-        frase=sc.nextLine();
+        String frase = sc.nextLine();
 
-        frase=frase.toLowerCase();
-        
-        char[] cadena = new char[frase.length()];
-        int[] cadena2 = new int[frase.length()];
-        for (int i=0; i<frase.length();i++) {
-            for (int j=0; j<cadena.length;j++) {
-                if (frase.charAt(i)==cadena[j]) {
-                    cadena2[j]+=1;
-                } else if (cadena[j] !='\u0000'){
-                    cadena[j]=frase.charAt(i);
-                    cadena2[j]+=1;
-                } else {
-                    System.out.println(cadena[i]);
-                }
+        // Convertimos la frase a minúsculas para ignorar mayúsculas/minúsculas
+        frase = frase.toLowerCase();
+
+        // Creamos un array de 26 posiciones para contar cada letra (a-z)
+        int[] contador = new int[26];
+
+        // Recorremos la frase y contamos solo las letras
+        for (int i = 0; i < frase.length(); i++) {
+            char caracter = frase.charAt(i);
+            if (caracter >= 'a' && caracter <= 'z') {
+                contador[caracter - 'a']++; // Incrementa el índice correspondiente a la letra
             }
         }
-        
-        for (int i=0; i<frase.length(); i++){
-            System.out.println(i+" "+cadena[i]+" "+cadena2[i]);
+
+        // Imprimimos los resultados
+        for (int i = 0; i < contador.length; i++) {
+            if (contador[i] > 0) { // Solo mostramos letras que aparecen en la frase
+                System.out.println((char) (i + 'a') + ": " + contador[i]);
+            }
         }
     }
 }

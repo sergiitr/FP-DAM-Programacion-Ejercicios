@@ -2,11 +2,29 @@
  * RegEx
  * @author Sergio Trillo
  */
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegEx {
+    public static boolean validarDNI() {
+        return false;
+    }
+
+    public static boolean validarPasaporte() {
+        return false;
+    }
+
+    public static boolean validarIBAN() {
+        return false;
+    }
+
+    public static boolean validarTlfnEspana() {
+        return false;
+    }
+
+    public static boolean validarFechas() {
+        return false;
+    }
+
     public static void main(String[] args) {
-        Regex rx = new Regex();
+        
     }
 }

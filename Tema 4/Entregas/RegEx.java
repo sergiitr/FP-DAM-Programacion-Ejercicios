@@ -32,7 +32,7 @@ public class RegEx {
      */
     public static boolean validarIBAN(String iban) {
         String regex = "ES\\d{2}(\\s|\\-)?\\d{4}(\\s|\\-)?\\d{4}(\\s|\\-)?\\d{2}(\\s|\\-)?\\d{10}";
-        return Pattern.matches(regex, iban.replaceAll("[\\s\\-]", "")); // Limpia espacios y guiones antes de validar
+        return Pattern.matches(regex, iban.replaceAll("[\\s\\-]", ""));
     }
 
     /**
@@ -42,7 +42,7 @@ public class RegEx {
      */
     public static boolean validarTlfnEspana(String telefono) {
         String regex = "(\\+34)?[6|7|9]\\d{8}";
-        return Pattern.matches(regex, telefono.replaceAll("[\\s\\-]", "")); // Limpia espacios y guiones antes de validar
+        return Pattern.matches(regex, telefono.replaceAll("[\\s\\-]", ""));
     }
 
     /**

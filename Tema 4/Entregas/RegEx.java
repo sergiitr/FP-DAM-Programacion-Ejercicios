@@ -57,27 +57,28 @@ public class RegEx {
 
     public static void main(String[] args) {
         System.out.println("Validar DNI:");
-        System.out.println(validarDNI("12345678Z"));
-        System.out.println(validarDNI("1234A")); 
+        System.out.println("12345678Z: "+validarDNI("12345678Z"));
+        System.out.println("1234A: "+validarDNI("1234A")); 
 
         System.out.println("\nValidar Pasaporte:");
-        System.out.println(validarPasaporte("ABC123456"));
-        System.out.println(validarPasaporte("A1C123"));
+        System.out.println("ABC123456: "+validarPasaporte("ABC123456"));
+        System.out.println("A1C123: "+validarPasaporte("A1C123"));
 
         System.out.println("\nValidar IBAN:");
-        System.out.println(validarIBAN("ES9121000418450200051332"));      
-        System.out.println(validarIBAN("ES91 21 0004 1845 02 00051332"));
-        System.out.println(validarIBAN("ES91-21-0004-1845-02-00051332"));
-        System.out.println(validarIBAN("ES21"));                     
+        System.out.println("ES9121000418450200051332: "+validarIBAN("ES9121000418450200051332"));      
+        System.out.println("ES91 21 0004 1845 02 00051332: "+validarIBAN("ES91 21 0004 1845 02 00051332"));
+        System.out.println("ES91-21-0004-1845-02-00051332: "+validarIBAN("ES91-21-0004-1845-02-00051332"));
+        System.out.println("ES21: "+validarIBAN("ES21"));                     
 
         System.out.println("\nValidar Teléfono en España:");
-        System.out.println(validarTlfnEspana("+34612345678"));
-        System.out.println(validarTlfnEspana("612345678"));   
-        System.out.println(validarTlfnEspana("812345678"));
+        System.out.println("+34612345678: "+validarTlfnEspana("+34612345678"));
+        System.out.println("612345678: "+validarTlfnEspana("612345678"));   
+        System.out.println("812345678: "+validarTlfnEspana("812345678"));
 
         System.out.println("\nValidar Fechas:");
-        System.out.println(validarFechas("10/10/2000"));
-        System.out.println(validarFechas("21-12-2001"));
-        System.out.println(validarFechas("21/12-2001"));
+        System.out.println("10/10/2000: "+validarFechas("10/10/2000"));
+        System.out.println("21-12-2001: "+validarFechas("21-12-2001"));
+        System.out.println("21/12-2001: "+validarFechas("21/12-2001"));
+        System.out.println("21/12-01: "+validarFechas("21/12-01"));
     }
 }

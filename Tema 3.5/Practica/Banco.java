@@ -21,7 +21,7 @@ public class Banco {
                 System.out.println(this.cuentas[i].toString());
     }
 
-    private CuentaBancaria[] cuentas = new CuentaBancaria[100];
-    private int cantidadCuentas=100;
+    private int cantCuentas=(Integer.MAX_VALUE)/3;
+    private CuentaBancaria[] cuentas = new CuentaBancaria[cantCuentas];
     private int contador=0;
 }

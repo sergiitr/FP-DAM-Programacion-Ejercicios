@@ -9,21 +9,6 @@ public class BancoApp {
         System.out.print("\033[H\033[2J");  
         System.out.flush();  
     }      
-    
-    public static int leerEntero(Scanner sc) {
-        int input = -1;
-        boolean valido = false;
-        while (!valido) {
-            try {
-                input = sc.nextInt();
-                valido = true;
-            } catch (Exception e) {
-                System.out.println("Entrada no válida. Por favor ingrese un número entero.");
-                sc.nextLine(); // Limpiar el buffer del Scanner
-            }
-        }
-        return input;
-    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -43,57 +28,101 @@ public class BancoApp {
 
         System.out.println("\n\n");
         do {
+            // Leer número de cuenta
             System.out.print("Ingrese un numero de cuenta: ");
-            numCuenta = leerEntero(sc);
-            
-            if (!Objects.nonNull(banco1.buscaCuenta(numCuenta)))
-                System.out.println("No existe ese numero de cuenta");
-            else {
-                System.out.println("Los datos de esa cuenta son:\n" + banco1.buscaCuenta(numCuenta).toString());
+            try {
+                numCuenta = sc.nextInt();
+                if (!Objects.nonNull(banco1.buscaCuenta(numCuenta)))
+                    System.out.println("No existe ese numero de cuenta");
+                else {
+                    System.out.println("Los datos de esa cuenta son:\n" + banco1.buscaCuenta(numCuenta).toString());
 
-                System.out.println("¿Qué operación quieres hacer en esa cuenta?");
-                System.out.println("Pulse 1 para depositar, 2 para retirar, 3 para transferencia");
-                do {
-                    aux = leerEntero(sc);
-                } while (aux != 1 && aux != 2 && aux != 3);
-                
-                switch (aux) {
-                    case 1:
-                        System.out.print("Introduzca la cantidad que quiera depositar: ");
-                        cantidad = leerEntero(sc);
-                        banco1.buscaCuenta(numCuenta).depositar(cantidad);
-                        break;
-                    case 2:
-                        System.out.print("Introduzca la cantidad que quiera retirar: ");
-                        cantidad = leerEntero(sc);
-                        banco1.buscaCuenta(numCuenta).retirar(cantidad);
-                        break;
-                    case 3:
-                        System.out.print("Introduzca la cantidad que quiera transferir: ");
-                        cantidad = leerEntero(sc);
+                    System.out.println("¿Qué operación quieres hacer en esa cuenta?");
+                    System.out.println("Pulse 1 para depositar, 2 para retirar, 3 para transferencia");
 
-                        System.out.print("Introduzca la cuenta a la que va a ir: ");
-                        cuentaDestino = leerEntero(sc);
+                    do {
+                        try {
+                            aux = sc.nextInt();
+                            if (aux != 1 && aux != 2 && aux != 3) {
+                                System.out.println("Opción no válida. Por favor ingrese 1, 2 o 3.");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Entrada no válida. Debe ingresar un número.");
+                            sc.nextLine();
+                            aux = -1;
+                        }
+                    } while (aux != 1 && aux != 2 && aux != 3);
 
-                        if (!Objects.nonNull(banco1.buscaCuenta(cuentaDestino)))
-                            System.out.println("No existe ese número de cuenta");
-                        else
-                            banco1.buscaCuenta(numCuenta).transferir(banco1.buscaCuenta(cuentaDestino), cantidad);
+                    switch (aux) {
+                        case 1:
+                            // Depositar
+                            try {
+                                System.out.print("Introduzca la cantidad que quiera depositar: ");
+                                cantidad = sc.nextInt();
+                                banco1.buscaCuenta(numCuenta).depositar(cantidad);
+                            } catch (Exception e) {
+                                System.out.println("Entrada no válida para la cantidad. Intente de nuevo.");
+                                sc.nextLine(); 
+                            }
+                            break;
+                        case 2:
+                            // Retirar
+                            try {
+                                System.out.print("Introduzca la cantidad que quiera retirar: ");
+                                cantidad = sc.nextInt();
+                                banco1.buscaCuenta(numCuenta).retirar(cantidad);
+                            } catch (Exception e) {
+                                System.out.println("Entrada no válida para la cantidad. Intente de nuevo.");
+                                sc.nextLine(); 
+                            }
+                            break;
+                        case 3:
+                            try {
+                                System.out.print("Introduzca la cantidad que quiera transferir: ");
+                                cantidad = sc.nextInt();
 
-                        break;
-                    default:
-                        break;
+                                System.out.print("Introduzca la cuenta a la que va a ir: ");
+                                cuentaDestino = sc.nextInt();
+
+                                if (!Objects.nonNull(banco1.buscaCuenta(cuentaDestino)))
+                                    System.out.println("No existe ese número de cuenta");
+                                else
+                                    banco1.buscaCuenta(numCuenta).transferir(banco1.buscaCuenta(cuentaDestino), cantidad);
+                            } catch (Exception e) {
+                                System.out.println("Entrada no válida para la cantidad o cuenta. Intente de nuevo.");
+                                sc.nextLine(); 
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    System.out.println("Los datos actualizados de esa cuenta son:\n" + banco1.buscaCuenta(numCuenta).toString());
                 }
-                System.out.println("Los datos actualizados de esa cuenta son:\n" + banco1.buscaCuenta(numCuenta).toString());
+
+                limpiarConsola();
+            } catch (Exception e) {
+                System.out.println("No se ha introducido un numero válido para la cuenta.");
+                sc.nextLine();
             }
 
-            limpiarConsola();
-
+            
             System.out.print("¿Quieres hacer otra operación? 1 para SI, 2 para NO: ");
-            aux = leerEntero(sc);
-            operaciones = aux == 1;
+            try {
+                do {
+                    aux = sc.nextInt();
+                    if (aux != 1 && aux != 2) {
+                        System.out.println("Opción no válida. Ingrese 1 para SI o 2 para NO.");
+                    }
+                } while (aux != 1 && aux != 2);
 
-            limpiarConsola();
+                operaciones = aux == 1;
+
+                limpiarConsola();
+            } catch (Exception e) {
+                System.out.println("Entrada no válida. Debe ingresar 1 para SI o 2 para NO.");
+                sc.nextLine(); 
+                operaciones = false; // Si se encuentra un error, salir del ciclo
+            }
         } while (operaciones);
     }
 }

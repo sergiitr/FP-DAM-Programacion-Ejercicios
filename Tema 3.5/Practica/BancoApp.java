@@ -121,7 +121,7 @@ public class BancoApp {
             } catch (Exception e) {
                 System.out.println("Entrada no válida. Debe ingresar 1 para SI o 2 para NO.");
                 sc.nextLine(); 
-                operaciones = false; // Si se encuentra un error, salir del ciclo
+                operaciones = false;
             }
         } while (operaciones);
     }

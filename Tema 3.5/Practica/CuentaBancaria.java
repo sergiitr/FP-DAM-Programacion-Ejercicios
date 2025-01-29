@@ -73,7 +73,6 @@ public class CuentaBancaria {
     private double saldo;
     private int numeroCuenta = 1000;
     private static int contador=0;
-
 }
 
 class MontoInvalidoException extends Exception {

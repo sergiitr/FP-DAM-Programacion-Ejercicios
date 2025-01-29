@@ -31,6 +31,11 @@ public class CuentaBancaria {
         return numeroCuenta;
     }
 
+    /**
+     * Metodo para depositar dinero en la cuenta
+     * Si es monto negativo, saltara la excepcion
+     * @param monto
+     */
     public void depositar(double monto) {
         if (monto <= 0) {
             try {
@@ -42,9 +47,13 @@ public class CuentaBancaria {
             this.saldo += monto;
     }
 
+    /**
+     * Metodo para retirar dinero en la cuenta
+     * Si es monto superor al saldo, saltara la excepción
+     * @param monto
+     */
     public void retirar(double monto) {
         if (monto > this.saldo) {
-
             try {
                 throw new FondosInsuficientesException("Se queda negativo");
             } catch (FondosInsuficientesException ex) {
@@ -52,6 +61,28 @@ public class CuentaBancaria {
             }
         } else
             this.saldo -= monto;
+    }
+
+    /**
+     * Metodo para trasferir dinero a una cuenta
+     * @param destino
+     * @param monto
+     */
+    public void transferir(CuentaBancaria destino, double monto) {
+        if (this.numeroCuenta == destino.numeroCuenta) {
+            System.out.println("No se puede trasferir dinero a uno mismo");
+        } else {
+            if (monto > this.saldo) {
+                try {
+                    throw new FondosInsuficientesException("Se queda negativo");
+                } catch (FondosInsuficientesException ex) {
+                    System.out.println("Error: "+ ex.getMessage());
+                }
+            } else {
+                this.saldo -= monto;
+                destino.saldo += monto;
+            }
+        }
     }
 
     public double mostrarSaldo() {

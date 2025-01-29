@@ -36,11 +36,10 @@ public class CuentaBancaria {
             try {
                 throw new MontoInvalidoException("Monto negativo");
             } catch (MontoInvalidoException ex) {
+                System.out.println("Error: "+ ex.getMessage());
             }
-            
-        } else {
+        } else
             this.saldo += monto;
-        }
     }
 
     public void retirar(double monto) {
@@ -49,10 +48,10 @@ public class CuentaBancaria {
             try {
                 throw new FondosInsuficientesException("Se queda negativo");
             } catch (FondosInsuficientesException ex) {
+                System.out.println("Error: "+ ex.getMessage());
             }
-        } else {
+        } else
             this.saldo -= monto;
-        }
     }
 
     public double mostrarSaldo() {

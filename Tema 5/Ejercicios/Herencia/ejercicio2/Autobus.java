@@ -11,5 +11,16 @@ public class Autobus extends Vehiculos {
         this.numeroPlazas = numeroPlazas;
     }
     
+    @Override
+    public double getImpuestoCirculacion() {
+        double impuestoCirculacionAct = super.impuestoCirculacion+super.impuestoCirculacion*0.2;
+        return impuestoCirculacionAct;
+    }
+
+    @Override
+    public String toString() {
+        return "Autobus [impuestoCirculacion=" + impuestoCirculacion + ", matricula=" + matricula + ", modelo=" + modelo + ", potenciaCV=" + potenciaCV + "]";
+    }
+
     private int numeroPlazas;
 }

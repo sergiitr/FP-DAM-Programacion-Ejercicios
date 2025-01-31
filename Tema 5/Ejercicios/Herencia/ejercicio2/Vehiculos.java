@@ -24,16 +24,27 @@ public class Vehiculos {
     public void setPotenciaCV(int potenciaCV) {
         this.potenciaCV = potenciaCV;
     }
-    public int getImpuestoCirculacion() {
+    public double getImpuestoCirculacion() {
         return impuestoCirculacion;
     }
     public void setImpuestoCirculacion(int impuestoCirculacion) {
         this.impuestoCirculacion = impuestoCirculacion;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Vehiculos{");
+        sb.append("impuestoCirculacion=").append(impuestoCirculacion);
+        sb.append(", matricula=").append(matricula);
+        sb.append(", modelo=").append(modelo);
+        sb.append(", potenciaCV=").append(potenciaCV);
+        sb.append('}');
+        return sb.toString();
+    }
+
     protected int impuestoCirculacion;
     protected String matricula;
     protected String modelo;
     protected int potenciaCV;
-
 }

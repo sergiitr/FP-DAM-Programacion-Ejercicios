@@ -11,10 +11,16 @@ public class Taxi extends Vehiculos {
         this.numeroLicencia = numeroLicencia;
     }
 
-    
+    @Override
     public double getImpuestoCirculacion() {
-        return super.impuestoCirculacion = (double)super.impuestoCirculacion+super.impuestoCirculacion*0.1;
+        double impuestoCirculacionAct = super.impuestoCirculacion+super.impuestoCirculacion*0.1;
+        return impuestoCirculacionAct;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Taxi [impuestoCirculacion=" + impuestoCirculacion + ", matricula=" + matricula + ", modelo=" + modelo + ", potenciaCV=" + potenciaCV + "]";
+    }
+
     private int numeroLicencia;
 }

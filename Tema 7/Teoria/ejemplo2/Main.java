@@ -29,5 +29,10 @@ public class Main {
         cantPalabras = texto.split(" ");
 
         System.out.println("Hay "+cantPalabras.length+" palabras");
+
+        String[] cantLineas;
+        cantLineas = texto.split("\n");
+
+        System.out.println("Hay "+cantLineas.length+" lineas");
     }
 }

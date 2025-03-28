@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         String rutaArchivo = "../Ficheros_actividades/jugadores.txt";
         ArrayList<Jugador> jugadores = new ArrayList<>();
-        int edad=0;
+        int _edad=0;
         double estatura=0;
         try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
             String linea;
@@ -29,10 +29,11 @@ public class Main {
 
 
         for (int i = 0; i < jugadores.size(); i++) {
-            edad+=jugadores.get(i).edad;
+            _edad+=jugadores.get(i).edad;
         }
 
-        double edadMedia = (double) edad/jugadores.size();
+        double edadMedia = (double) _edad/jugadores.size();
+        edadMedia=Math.round(edadMedia * 100.0) / 100.0;
         System.out.println("\nLa edad media es: "+edadMedia+" años");
 
         for (int i = 0; i < jugadores.size(); i++) {
@@ -40,6 +41,7 @@ public class Main {
         }
 
         double estaturaMedia = estatura/jugadores.size();
+        estaturaMedia=Math.round(estaturaMedia * 100.0) / 100.0;
         System.out.println("La estatura media es: "+estaturaMedia+"m");
     }
 }

@@ -31,9 +31,7 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        // Palabras clave a buscar
-        String[] palabrasClave = {  "quijote", "sancho", "cardenio", "dulcinea", "rucio", "rocinante", "fierabras", "barataria", "hamete"
-        };
+        String[] palabrasClave = { "quijote", "sancho", "cardenio", "dulcinea", "rucio", "rocinante", "fierabras", "barataria", "hamete"};
         
         ArrayList<String> listaPalabras = new ArrayList<>();
         ArrayList<Integer> listaContadores = new ArrayList<>();
@@ -79,4 +77,6 @@ public class Main {
             System.err.println("Error al generar el informe: " + ex.getMessage());
         }
     }
+
+    
 }

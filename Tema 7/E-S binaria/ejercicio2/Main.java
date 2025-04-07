@@ -1,8 +1,12 @@
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -39,14 +43,14 @@ public class Main {
                 }
             }
         } catch (IOException ex) {
-            System.out.println("Hola");
+            System.out.println("Error de escritura.");
             System.out.println(ex);
         } finally {
             if (flujoSalida != null) {
                 try {
                     flujoSalida.close();
                 } catch (IOException ex) {
-                    System.out.println("Adios");
+                    System.out.println("Error al cerrar flujo.");
                     System.out.println(ex);
                 }
             }
@@ -62,15 +66,56 @@ public class Main {
                 }
             }
         } catch (IOException ex) {
+            System.out.println("Error de escritura.");
             System.out.println(ex);
         } finally {
             if (flujoSalida != null) {
                 try {
                     flujoSalida.close();
                 } catch (IOException ex) {
+                    System.out.println("Error al cerrar flujo.");
                     System.out.println(ex);
                 }
             }
+        }
+
+        // --- leer
+        System.out.print("\nLos alumnos aprobados son: ");
+        try (ObjectInputStream flujoEntrada = new ObjectInputStream(new FileInputStream("alumnosAprobados.dat"))){
+            ArrayList<Alumnos> tablaNumeros = new ArrayList<>();
+            while (true) {
+                try {
+                    Alumnos alumno = (Alumnos) flujoEntrada.readObject();
+                    tablaNumeros.add(alumno);
+                } catch (IOException ex) {
+                    break;
+                } catch (ClassNotFoundException cex){
+                    System.out.println(cex.getMessage());
+                    break;
+                }
+            }
+            System.out.println(Arrays.toString(tablaNumeros.toArray()));
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+
+        System.out.print("\n\nLos alumnos suspensos son: ");
+        try (ObjectInputStream flujoEntrada = new ObjectInputStream(new FileInputStream("alumnosSuspensos.dat"))){
+            ArrayList<Alumnos> tablaNumeros = new ArrayList<>();
+            while (true) {
+                try {
+                    Alumnos alumno = (Alumnos) flujoEntrada.readObject();
+                    tablaNumeros.add(alumno);
+                } catch (IOException ex) {
+                    break; 
+                } catch (ClassNotFoundException cex){
+                    System.out.println(cex.getMessage());
+                    break;
+                }
+            }
+            System.out.println(Arrays.toString(tablaNumeros.toArray()));
+        } catch (IOException ex) {
+            System.out.println(ex);
         }
     }
 }

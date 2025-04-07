@@ -1,4 +1,6 @@
-public class Alumnos {
+import java.io.Serializable;
+
+public class Alumnos implements Serializable{
     public Alumnos(String nombre, int edad, double notaMedia) {
         this.nombre = nombre;
         this.edad = edad;

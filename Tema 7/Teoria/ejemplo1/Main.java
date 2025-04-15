@@ -3,8 +3,8 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        String texto = ""; // Declaramos la cadena fuera del try-catch para su acceso posterior
-        FileReader in = null; // Declaramos FileReader fuera del try-catch
+        String texto = "";
+        FileReader in = null;
         String rutaArchivo = "C:\\Users\\usuario\\Desktop\\Programacion\\Tema 7\\Teoria\\ejemplo1\\texto.txt";
         char[][] cadena=new char[5][2];
         cadena[0][0]='a';
@@ -15,22 +15,21 @@ public class Main {
         try {
             in = new FileReader(rutaArchivo);
             int caracter;
-            while ((caracter = in.read()) != -1) { // Leemos caracter a caracter
-                texto += ((char) caracter); // Agregamos el caracter al texto
+            while ((caracter = in.read()) != -1) {
+                texto += ((char) caracter);
             }
         } catch (IOException ex) {
             System.err.println("Error al leer el archivo: " + ex.getMessage());
         } finally {
-            // Cerramos el flujo en cualquier caso
             if (in != null) {
                 try {
-                    in.close(); // Cerramos el flujo
+                    in.close();
                 } catch (IOException ex) {
                     System.err.println("Error al cerrar el archivo: " + ex.getMessage());
                 }
             }
         }
-        System.out.println("Nuestra cadena de texto es: "+texto); // mostramos el texto leído
+        System.out.println("Nuestra cadena de texto es: "+texto);
         Integer contadorA=0, contadorE=0, contadorI=0, contadorO=0, contadorU=0;
         for (int i = 0; i < texto.length(); i++) {
             switch (texto.charAt(i)) {

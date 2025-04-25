@@ -33,6 +33,7 @@ public class Main {
             sentencia.setString(2, asignatura);
             ResultSet rs = sentencia.executeQuery();
 
+            System.out.println("DNI\t\tNombre");
             while(rs.next()) {
                 System.out.println(rs.getString("dni")+"\t"+rs.getString("nombre"));   
             }   

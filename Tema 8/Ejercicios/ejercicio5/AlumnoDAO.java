@@ -74,6 +74,14 @@ class Alumno {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "Alumno [dni=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", fechaNacimiento="
+                + fechaNacimiento + ", direccion=" + direccion + ", email=" + email + "]";
+    }
+
+    
     
 }
 
@@ -86,7 +94,7 @@ public class AlumnoDAO {
     }
 
     public void crearAlumno(Alumno alumno) throws SQLException {
-        String sql = "INSERT INTO alumnos (dni, nombre, apellidos, fechaNacimiento, direccion, email) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO alumno (dni, nombre, apellidos, fechaNacimiento, direccion, email) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
             statement.setString(1, alumno.getDni());
             statement.setString(2, alumno.getNombre());
@@ -100,7 +108,7 @@ public class AlumnoDAO {
     }
 
     public Alumno obtenerAlumnoPorDni(String dni) throws SQLException {
-        String sql = "SELECT * FROM alumnos WHERE dni = ?";
+        String sql = "SELECT * FROM alumno WHERE dni = ?";
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
             statement.setString(1, dni);
             ResultSet resultSet = statement.executeQuery();
@@ -116,9 +124,9 @@ public class AlumnoDAO {
         }
     }
 
-    public List<Alumno> obtenerTodosAlumnos() throws SQLException {
-        List<Alumno> listaAlumnos = new ArrayList<>();
-        String sql = "SELECT * FROM alumnos";
+    public List<Alumno> obtenerTodosalumno() throws SQLException {
+        List<Alumno> listaalumno = new ArrayList<>();
+        String sql = "SELECT * FROM alumno";
         try (Statement statement = conexion.createStatement();
             ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -129,19 +137,19 @@ public class AlumnoDAO {
                 String direccion = resultSet.getString("direccion");
                 String email = resultSet.getString("email");
                 Alumno alumno = new Alumno(dni, nombre, apellidos, fechaNacimiento, direccion, email);
-                listaAlumnos.add(alumno);
+                listaalumno.add(alumno);
             }
         }
-        return listaAlumnos;
+        return listaalumno;
     }
 
     public void actualizarAlumno(Alumno alumno) throws SQLException {
-        String sql = "UPDATE alumnos SET nombre = ?, apellidos = ?, direccion = ?, fechaNacimiento = ?, email = ? WHERE dni = ?";
+        String sql = "UPDATE alumno SET nombre = ?, apellidos = ?, direccion = ?, fechaNacimiento = ?, email = ? WHERE dni = ?";
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
             statement.setString(1, alumno.getNombre());
             statement.setString(2, alumno.getApellidos());
-            statement.setDate(3, Date.valueOf(alumno.getFechaNacimiento()));
-            statement.setString(4, alumno.getDireccion());
+            statement.setString(3, alumno.getDireccion());
+            statement.setDate(4, Date.valueOf(alumno.getFechaNacimiento()));
             statement.setString(5, alumno.getEmail());
             statement.setString(6, alumno.getDni());
             statement.executeUpdate();
@@ -150,7 +158,7 @@ public class AlumnoDAO {
     }
 
     public void eliminarAlumno(String dni) throws SQLException {
-        String sql = "DELETE FROM alumnos WHERE dni = ?";
+        String sql = "DELETE FROM alumno WHERE dni = ?";
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
             statement.setString(1, dni);
             statement.executeUpdate();

@@ -22,7 +22,32 @@ public class Main {
     }
 
     public static void datosProfesores() {
-        
+        try {
+            Scanner sc = new Scanner(System.in);
+            String nombreAsignatura;
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/academia", "usuario", "usuario");
+            AlumnoDAO alumnos = new AlumnoDAO(conexion);
+            
+
+            alumnos.mostrarDatosProfesores();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void actualizarNota() {
+        try {
+            Scanner sc = new Scanner(System.in);
+            String nombreAsignatura;
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/academia", "usuario", "usuario");
+            AlumnoDAO alumnos = new AlumnoDAO(conexion);
+            
+
+            alumnos.actualizarNota();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -48,7 +73,7 @@ public class Main {
                     datosProfesores();
                     break;
                 case 3:
-                    
+                    actualizarNota();
                     break;
                 case 4:
                     

@@ -2,6 +2,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 class Alumno {
     private String dni;
@@ -187,6 +188,62 @@ public class AlumnoDAO {
     }
 
     public void mostrarDatosProfesores() {
-        String sql = "SELECT dni,profesor.nombre as nombreProfesor,apellido, COUNT(asignatura.nombre) contAsignaturas FROM profesor,asignatura WHERE asignatura.dniProfesor=profesor.dni GROUP BY asignatura.dniProfesor"
+        String sql = "SELECT dni,profesor.nombre as nombreProfesor,apellido, COUNT(asignatura.nombre) contAsignaturas FROM profesor,asignatura WHERE asignatura.dniProfesor=profesor.dni GROUP BY asignatura.dniProfesor";
+        try (Statement statement = conexion.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
+            System.out.println("DNI\t\tNombreProfesor\tApellido\tContAsignatura");
+            while (resultSet.next()!=false) {
+                String dni = resultSet.getString("dni");
+                String nombreProfesor = resultSet.getString("nombreProfesor");
+                String apellido = resultSet.getString("apellido");
+                int contAsignaturas = resultSet.getInt("contAsignaturas");
+                
+                System.out.println(dni+"\t"+nombreProfesor+"\t\t"+apellido+"\t"+contAsignaturas);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void actualizarNota() throws SQLException {
+        Scanner sc = new Scanner(System.in);
+        int nota;
+        String dniAlumno;
+        String dniProfesor;
+        System.out.print("Introduce la nueva nota del alumno: ");
+        nota=sc.nextInt();
+        System.out.print("Introduce el DNI del alumno: ");
+        dniAlumno=sc.nextLine();
+        System.out.print("Introduce el DNI del profesor: ");
+        dniProfesor=sc.nextLine();
+        String sql = "UPDATE matricula SET nota = ? WHERE dniAlumno=? AND matricula.idasignatura=asignatura.idAsignatura AND asignatura.dniProfesor=profesor.dniProfesor AND profesor.dniProfesor=?";
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setInt(1, nota);
+            statement.setString(2, dniAlumno);
+            statement.setString(3, dniProfesor);
+            
+            statement.executeUpdate();
+            System.out.println("Datos del alumno actualizados exitosamente en la base de datos.");
+        }
+    }
+
+    public void datosAsignatura() {
+        Scanner sc = new Scanner(System.in);
+        String dniP;
+        System.out.print("Introduce el DNI del profesor: ");
+        dniP=sc.nextLine();
+
+        String sql = "SELECT nombre,descripcion FROM asignatura WHERE dniProfesor=?";
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setString(1, dniP);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String nombre = resultSet.getString("nombre");
+                String descripcion = resultSet.getString("descripcion");
+                System.out.println(nombre+"\t"+descripcion);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

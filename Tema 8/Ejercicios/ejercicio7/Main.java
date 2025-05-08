@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Main {
     public static String URL = "jdbc:sqlite:chinook.db";
+    public static Scanner sc = new Scanner(System.in);
     
     /**
      * Abrir conexion de la base de datos
@@ -26,6 +27,7 @@ public class Main {
                 Statement stmt = conexion.createStatement();
                 
                 while ((linea = br.readLine()) != null) {
+                    // Concatenamos la línea al StringBuilder
                     sqlCompleto.append(linea).append("\n");
                     
                     if (linea.trim().endsWith(";")) {
@@ -53,10 +55,9 @@ public class Main {
      * Ver album por Artista
      */
     public static void verAlbunesArtista() {
-        Scanner sc = new Scanner(System.in);
+        
         try {
             Connection conexion = DriverManager.getConnection(URL);
-            System.out.println("Conexión exitosa.");
             try{
                 String nombreArtista;
                 System.out.print("Introduce nombre artista: ");
@@ -88,7 +89,6 @@ public class Main {
     public static void verArtista() {
         try {
             Connection conexion = DriverManager.getConnection(URL);
-            System.out.println("Conexión exitosa.");
     
             try{
                 // Leer datos
@@ -116,7 +116,6 @@ public class Main {
     public static void insertarAlbum() {
         try {
             Connection conexion = DriverManager.getConnection(URL);
-            System.out.println("Conexión exitosa.");
             try {
                 String sql = "INSERT INTO albums(Title,ArtistId) VALUES()";
                 PreparedStatement statement = conexion.prepareStatement(sql);
@@ -136,10 +135,8 @@ public class Main {
      * Actualizar Alum
      */
     public static void actualizarAlbum() {
-        Scanner sc = new Scanner(System.in);
         try {
             Connection conexion = DriverManager.getConnection(URL);
-            System.out.println("Conexión exitosa.");
             String nuevoNombre, antiguoNombre;
             System.out.print("Introduce album q quieras actualizar nombre: ");
             nuevoNombre=sc.nextLine();
@@ -165,11 +162,7 @@ public class Main {
      */
     public static void eliminarAlbum() {
         try {
-            
-            Scanner sc = new Scanner(System.in);
-            
             Connection conexion = DriverManager.getConnection(URL);
-            System.out.println("Conexión exitosa.");
             String nombreAlbum;
             System.out.print("Introduce nombre album que quieras eliminar: ");
             nombreAlbum=sc.nextLine();
@@ -189,16 +182,15 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        if (ejecutarSQLDesdeArchivo("chinook.sql"))
+        
+        if (ejecutarSQLDesdeArchivo("chinook.sql") == true)
             ejecutarSQLDesdeArchivo("chinook.sql"); 
         else
-            System.out.println("Se ha cargado anterirmente");
+            System.out.println("Se ha cargado anteriormente");
         int opcion;
         try {
             do { 
                 Connection conexion = DriverManager.getConnection(URL);
-                System.out.println("Conexión exitosa.");
     
                 System.out.println("1.- Ver artistas");
                 System.out.println("2.- Ver albunes");

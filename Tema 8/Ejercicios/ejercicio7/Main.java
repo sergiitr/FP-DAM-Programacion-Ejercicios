@@ -26,7 +26,6 @@ public class Main {
                 Statement stmt = conexion.createStatement();
                 
                 while ((linea = br.readLine()) != null) {
-                    // Concatenamos la línea al StringBuilder
                     sqlCompleto.append(linea).append("\n");
                     
                     if (linea.trim().endsWith(";")) {

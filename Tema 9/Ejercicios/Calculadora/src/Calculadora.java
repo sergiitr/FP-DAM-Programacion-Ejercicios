@@ -23,23 +23,22 @@ public class Calculadora {
     private JButton botSuma;
     private JButton num1;
 
-    // Método auxiliar para evaluar una expresión simple
+    /**
+     * Método auxiliar para evaluar una expresión simple
+     * @param expr
+     * @return valor
+     */
     private double calcular(String expr) {
         try {
-            // Eliminar espacios
             expr = expr.replaceAll(" ", "");
 
-            // Si la expresión está vacía, retorna 0
-            if (expr.isEmpty()) {
+            if (expr.isEmpty())
                 return 0;
-            }
 
-            // Evaluar operaciones básicas
             double resultado = 0;
-            String[] tokens = expr.split("[+\\-*/]"); // Dividir la expresión en números
+            String[] tokens = expr.split("[+\\-*/]");
 
             if (tokens.length > 1) {
-                // Separar operadores
                 String operador = expr.replaceAll("[0-9]", "");
 
                 double num1 = Double.parseDouble(tokens[0]);
@@ -56,11 +55,10 @@ public class Calculadora {
                         resultado = num1 * num2;
                         break;
                     case "/":
-                        if (num2 != 0) {
+                        if (num2 != 0)
                             resultado = num1 / num2;
-                        } else {
-                            throw JOptionPane.showMessageDialog(frame,"No es un numero");
-                        }
+                        else
+                            throw new ArithmeticException("División por cero");
                         break;
                     default:
                         throw new IllegalArgumentException("Operador no válido");
@@ -82,7 +80,6 @@ public class Calculadora {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        // Asignación de números y operadores
         num7.addActionListener(e -> Salida.setText(Salida.getText() + "7"));
         num8.addActionListener(e -> Salida.setText(Salida.getText() + "8"));
         num9.addActionListener(e -> Salida.setText(Salida.getText() + "9"));

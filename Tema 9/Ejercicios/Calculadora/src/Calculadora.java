@@ -65,7 +65,6 @@ public class Calculadora {
                 }
             }
             return resultado;
-
         } catch (Exception e) {
             Salida.setText("Error");
             return 0;
@@ -106,23 +105,6 @@ public class Calculadora {
                 Salida.setText(String.valueOf(result));
             } catch (Exception ex) {
                 Salida.setText("Error");
-            }
-        });
-
-        Salida.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                System.out.println("keyTyped: " + e.getKeyChar());
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                System.out.println("keyPressed: " + e.getKeyChar() + " (código: " + e.getKeyCode() + ")");
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                System.out.println("keyReleased: " + e.getKeyChar());
             }
         });
     }

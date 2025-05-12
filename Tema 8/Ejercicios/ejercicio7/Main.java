@@ -26,14 +26,12 @@ public class Main {
                 Statement stmt = conexion.createStatement();
                 
                 while ((linea = br.readLine()) != null) {
-                    // Concatenamos la línea al StringBuilder
-                    System.out.println(sqlCompleto);
                     sqlCompleto.append(linea).append("\n");
                     
                     if (linea.trim().endsWith(";")) {
                         try {
                             stmt.execute(sqlCompleto.toString());
-                            sqlCompleto.setLength(0);  // Limpiamos el StringBuilder para la siguiente sentencia
+                            sqlCompleto.setLength(0);
                         } catch (SQLException e) {
                             return false;
                             //System.out.println("Error al ejecutar SQL: " + e.getMessage());
@@ -93,16 +91,13 @@ public class Main {
     public static void verArtista() {
         try {
             Connection conexion = DriverManager.getConnection(URL);
-    
             try{
-                // Leer datos
                 String sql = "SELECT * FROM artists";
                 Statement statement = conexion.createStatement();
                 ResultSet resultSet = statement.executeQuery(sql);
                 while (resultSet.next()) {
                     System.out.println(resultSet.getInt("ArtistId") + "\t" + resultSet.getString("Name"));
                 }
-                
                 conexion.close();
             } catch (SQLException ex) {
                 System.out.println("Error al hacer el select");
@@ -118,10 +113,22 @@ public class Main {
      * Insertar nuevo Album
      */
     public static void insertarAlbum() {
+        Scanner sc = new Scanner(System.in);
         try {
             Connection conexion = DriverManager.getConnection(URL);
             try {
-                String sql = "INSERT INTO albums(Title,ArtistId) VALUES()";
+                String titulo;
+                int idArtista;
+
+                System.out.print("Introduce Titulo: ");
+                titulo=sc.nextLine();
+                
+                System.out.print("Introduce el ID del artista: ");
+                idArtista=sc.nextInt();
+
+                sc.nextLine();
+
+                String sql = "INSERT INTO albums(Title,ArtistId) VALUES('"+titulo+"', "+idArtista+")";
                 PreparedStatement statement = conexion.prepareStatement(sql);
                 int rowsAffected = statement.executeUpdate(sql);
                 System.out.println("Filas afectadas: " + rowsAffected);
@@ -170,9 +177,8 @@ public class Main {
             String nombreAlbum;
             System.out.print("Introduce nombre album que quieras eliminar: ");
             nombreAlbum=sc.nextLine();
-            
             try {
-                String sql = "DELETE FROM albums WHERE Title='"+nombreAlbum;
+                String sql = "DELETE FROM albums WHERE Title='"+nombreAlbum+"'";
                 PreparedStatement statement = conexion.prepareStatement(sql);
                 int rowsAffected = statement.executeUpdate(sql);
                 System.out.println("Filas afectadas: " + rowsAffected);
@@ -232,7 +238,6 @@ public class Main {
         } catch (SQLException ex) {
             System.out.println("Error al conectar a la base de datos.");
             ex.printStackTrace();
-        }
-                
+        }          
     }
 }

@@ -23,11 +23,11 @@ public class Main {
             String linea;
             
             try (Connection conexion = DriverManager.getConnection(URL)) {
-                System.out.println("Conexión exitosa.");
                 Statement stmt = conexion.createStatement();
                 
                 while ((linea = br.readLine()) != null) {
                     // Concatenamos la línea al StringBuilder
+                    System.out.println(sqlCompleto);
                     sqlCompleto.append(linea).append("\n");
                     
                     if (linea.trim().endsWith(";")) {
@@ -63,12 +63,16 @@ public class Main {
                 System.out.print("Introduce nombre artista: ");
                 nombreArtista = sc.nextLine();
 
-                String sql = "SELECT albums.* FROM albums,artists WHERE albumns.ArtistId=artists.ArtistId AND artists.Name="+nombreArtista;
+                String sql = "SELECT albums.AlbumId, albums.Title FROM albums,artists WHERE albums.ArtistId=artists.ArtistId AND artists.Name='"+nombreArtista+"'";
                 
+                int albumID;
+                String tituloAlbum;
                 Statement stmt = conexion.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
-                    System.out.println(rs.getInt("ArtistId") + "\t" + rs.getString("Name"));
+                    albumID=rs.getInt("AlbumId");
+                    tituloAlbum=rs.getString("Title");
+                    System.out.println(albumID + "\t" + tituloAlbum);
                 }
                 
                 conexion.close();
@@ -203,7 +207,7 @@ public class Main {
                     System.out.print("Introduce opcion: ");
                     opcion = sc.nextInt();
                 } while (opcion < 1 || opcion > 6);
-                
+                sc.nextLine();
                 switch (opcion) {
                     case 1:
                         verArtista();

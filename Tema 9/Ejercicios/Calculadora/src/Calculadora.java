@@ -28,48 +28,50 @@ public class Calculadora {
      * @param expr
      * @return valor
      */
-    private double calcular(String expr) {
+    private double calcular(JFrame frame, String expr) {
         try {
             expr = expr.replaceAll(" ", "");
 
-            if (expr.isEmpty())
+            if (expr.isEmpty()) {
                 return 0;
+            }
 
-            double resultado = 0;
-            String[] tokens = expr.split("[+\\-*/]");
+            String[] tokens = expr.split("([+\\-*/])");
 
-            if (tokens.length > 1) {
-                String operador = expr.replaceAll("[0-9]", "");
+            if (tokens.length == 2) {
+                String operador = expr.replaceAll("[0-9.]", "");
 
                 double num1 = Double.parseDouble(tokens[0]);
                 double num2 = Double.parseDouble(tokens[1]);
 
                 switch (operador) {
                     case "+":
-                        resultado = num1 + num2;
-                        break;
+                        return num1 + num2;
                     case "-":
-                        resultado = num1 - num2;
-                        break;
+                        return num1 - num2;
                     case "*":
-                        resultado = num1 * num2;
-                        break;
+                        return num1 * num2;
                     case "/":
-                        if (num2 != 0)
-                            resultado = num1 / num2;
-                        else
-                            throw new ArithmeticException("División por cero");
-                        break;
+                        if (num2 != 0) {
+                            return num1 / num2;
+                        } else {
+                            JOptionPane.showMessageDialog(frame, "División inválida, el divisor no puede ser 0");
+                            return 0;
+                        }
                     default:
-                        throw new IllegalArgumentException("Operador no válido");
+                        JOptionPane.showMessageDialog(frame, "Operador no válido");
+                        return 0;
                 }
+            } else {
+                JOptionPane.showMessageDialog(frame, "Expresión inválida");
+                return 0;
             }
-            return resultado;
         } catch (Exception e) {
-            Salida.setText("Error");
+            Salida.setText("Error en la expresión");
             return 0;
         }
     }
+
 
     public Calculadora() {
         JFrame frame = new JFrame("VentanaPrincipal");
@@ -99,12 +101,13 @@ public class Calculadora {
         botSuma.addActionListener(e -> Salida.setText(Salida.getText() + "+"));
 
         botIgual.addActionListener(e -> {
+            double result=0;
             try {
                 String expression = Salida.getText();
-                double result = calcular(expression);
+                result = calcular(frame, expression);
                 Salida.setText(String.valueOf(result));
             } catch (Exception ex) {
-                Salida.setText("Error");
+                Salida.setText("Error acumulador");
             }
         });
     }

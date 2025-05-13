@@ -1,0 +1,149 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+import javax.swing.*;
+
+
+public class Main {
+    public static String URL = "jdbc:sqlite:chinook.db";
+    public static Scanner sc = new Scanner(System.in);
+
+
+    /**
+     * Insertar nuevo Album
+     */
+    public static void insertarAlbum() {
+        Scanner sc = new Scanner(System.in);
+        try {
+            Connection conexion = DriverManager.getConnection(URL);
+            try {
+                String titulo;
+                int idArtista;
+
+                System.out.print("Introduce Titulo: ");
+                titulo=sc.nextLine();
+
+                System.out.print("Introduce el ID del artista: ");
+                idArtista=sc.nextInt();
+
+                sc.nextLine();
+
+                String sql = "INSERT INTO albums(Title,ArtistId) VALUES('"+titulo+"', "+idArtista+")";
+                PreparedStatement statement = conexion.prepareStatement(sql);
+                int rowsAffected = statement.executeUpdate(sql);
+                System.out.println("Filas afectadas: " + rowsAffected);
+            } catch (SQLException ex) {
+                System.out.println("Error al hacer el select");
+                ex.printStackTrace();
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Conexion no exitosa");
+        }
+    }
+
+    /**
+     * Actualizar Alum
+     */
+    public static void actualizarAlbum() {
+        try {
+            Connection conexion = DriverManager.getConnection(URL);
+            String nuevoNombre, antiguoNombre;
+            System.out.print("Introduce album q quieras actualizar nombre: ");
+            nuevoNombre=sc.nextLine();
+            System.out.print("Introduce nuevo nombre: ");
+            antiguoNombre=sc.nextLine();
+            try {
+                String sql = "UPDATE albums SET Title='"+nuevoNombre+"' WHERE Title='"+antiguoNombre+"'";
+                PreparedStatement statement = conexion.prepareStatement(sql);
+                int rowsAffected = statement.executeUpdate(sql);
+                System.out.println("Filas afectadas: " + rowsAffected);
+            } catch (SQLException ex) {
+                System.out.println("Error al hacer el select");
+                ex.printStackTrace();
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Conexion no exitosa");
+        }
+    }
+
+    /**
+     * Eliminar Album
+     */
+    public static void eliminarAlbum() {
+        try {
+            Connection conexion = DriverManager.getConnection(URL);
+            String nombreAlbum;
+            System.out.print("Introduce nombre album que quieras eliminar: ");
+            nombreAlbum=sc.nextLine();
+            try {
+                String sql = "DELETE FROM albums WHERE Title='"+nombreAlbum+"'";
+                PreparedStatement statement = conexion.prepareStatement(sql);
+                int rowsAffected = statement.executeUpdate(sql);
+                System.out.println("Filas afectadas: " + rowsAffected);
+            } catch (SQLException ex) {
+                System.out.println("Error al hacer el select");
+                ex.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println("Conexion no exitosa");
+        }
+    }
+
+    public static void main(String[] args) {
+
+
+        SwingUtilities.invokeLater(() -> new Vista());
+
+        /*int opcion;
+        try {
+            do {
+                Connection conexion = DriverManager.getConnection(URL);
+
+                System.out.println("1.- Ver artistas");
+                System.out.println("2.- Ver albunes");
+                System.out.println("3.- Insertar albun");
+                System.out.println("4.- Actalizar album");
+                System.out.println("5.- Eliminar album");
+                System.out.println("6.- Salir");
+
+                do {
+                    System.out.print("Introduce opcion: ");
+                    opcion = sc.nextInt();
+                } while (opcion < 1 || opcion > 6);
+                sc.nextLine();
+                switch (opcion) {
+                    case 1:
+                        verArtista();
+                        break;
+                    case 2:
+                        verAlbunesArtista();
+                        break;
+                    case 3:
+                        insertarAlbum();
+                        break;
+                    case 4:
+                        actualizarAlbum();
+                        break;
+                    case 5:
+                        eliminarAlbum();
+                        break;
+                    case 6:
+                        System.out.println("Final del programa");
+                        break;
+                }
+            } while (opcion!=6);
+        } catch (SQLException ex) {
+            System.out.println("Error al conectar a la base de datos.");
+            ex.printStackTrace();
+        }*/
+    }
+}

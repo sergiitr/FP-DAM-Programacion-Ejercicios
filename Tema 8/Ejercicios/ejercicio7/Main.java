@@ -129,35 +129,8 @@ public class Main {
                 sc.nextLine();
 
                 String sql = "INSERT INTO albums(Title,ArtistId) VALUES('"+titulo+"', "+idArtista+")";
-                PreparedStatement statement = conexion.prepareStatement(sql);
-                int rowsAffected = statement.executeUpdate(sql);
-                System.out.println("Filas afectadas: " + rowsAffected);
-            } catch (SQLException ex) {
-                System.out.println("Error al hacer el select");
-                ex.printStackTrace();
-            }
-            
-        } catch (SQLException e) {
-            System.out.println("Conexion no exitosa");
-        }
-    }
-
-    /**
-     * Actualizar Alum
-     */
-    public static void actualizarAlbum() {
-        try {
-            Connection conexion = DriverManager.getConnection(URL);
-            String nuevoNombre, antiguoNombre;
-            System.out.print("Introduce album q quieras actualizar nombre: ");
-            nuevoNombre=sc.nextLine();
-            System.out.print("Introduce nuevo nombre: ");
-            antiguoNombre=sc.nextLine();
-            try {
-                String sql = "UPDATE albums SET Title='"+nuevoNombre+"' WHERE Title='"+antiguoNombre+"'";
-                PreparedStatement statement = conexion.prepareStatement(sql);
-                int rowsAffected = statement.executeUpdate(sql);
-                System.out.println("Filas afectadas: " + rowsAffected);
+                Statement statement = conexion.createStatement();
+                statement.executeUpdate(sql);
             } catch (SQLException ex) {
                 System.out.println("Error al hacer el select");
                 ex.printStackTrace();
@@ -179,9 +152,8 @@ public class Main {
             nombreAlbum=sc.nextLine();
             try {
                 String sql = "DELETE FROM albums WHERE Title='"+nombreAlbum+"'";
-                PreparedStatement statement = conexion.prepareStatement(sql);
-                int rowsAffected = statement.executeUpdate(sql);
-                System.out.println("Filas afectadas: " + rowsAffected);
+                Statement statement = conexion.createStatement();
+                statement.executeUpdate(sql);
             } catch (SQLException ex) {
                 System.out.println("Error al hacer el select");
                 ex.printStackTrace();
@@ -190,6 +162,33 @@ public class Main {
             System.out.println("Conexion no exitosa");
         }
     }
+
+    /**
+     * Actualizar Alum
+     */
+    public static void actualizarAlbum() {
+        try {
+            Connection conexion = DriverManager.getConnection(URL);
+            String nuevoNombre, antiguoNombre;
+            System.out.print("Introduce album q quieras actualizar nombre: ");
+            nuevoNombre=sc.nextLine();
+            System.out.print("Introduce nuevo nombre: ");
+            antiguoNombre=sc.nextLine();
+            try {
+                String sql = "UPDATE albums SET Title='"+nuevoNombre+"' WHERE Title='"+antiguoNombre+"'";
+                Statement statement = conexion.createStatement();
+                statement.executeUpdate(sql);
+            } catch (SQLException ex) {
+                System.out.println("Error al hacer el select");
+                ex.printStackTrace();
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Conexion no exitosa");
+        }
+    }
+
+    
 
     public static void main(String[] args) {
         

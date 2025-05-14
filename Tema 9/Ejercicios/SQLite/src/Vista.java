@@ -50,7 +50,6 @@ public class Vista {
     public Vista() {
         Scanner sc = new Scanner(System.in);
 
-
         JFrame frame = new JFrame("panel1");
         frame.setContentPane(panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,7 +85,7 @@ public class Vista {
             try{
                 ejecutarSQLDesdeArchivo("chinook.sql");
                 Connection conexion = DriverManager.getConnection(URL);
-                String nombreArtista = JOptionPane.showInputDialog(null, "Introduce nombre del artista:");
+                String nombreArtista = JOptionPane.showInputDialog(null, "Introduce nombre del artista: ");
 
 
                 String sql = "SELECT albums.AlbumId, albums.Title FROM albums,artists WHERE albums.ArtistId=artists.ArtistId AND artists.Name='"+nombreArtista+"'";
@@ -104,6 +103,45 @@ public class Vista {
                 JOptionPane.showMessageDialog(frame, mensajeCompleto.toString());
             } catch (SQLException ex2) {
                 System.out.println("Error al hacer el select: " + ex2.getMessage());
+            }
+        });
+
+        eliminarAlbum.addActionListener(e -> {
+            try {
+                ejecutarSQLDesdeArchivo("chinook.sql");
+                Connection conexion = DriverManager.getConnection(URL);
+                String nombreAlbum=JOptionPane.showInputDialog(null, "Introduce nombre del album que quieras eliminar: ");
+                try {
+                    String sql = "DELETE FROM albums WHERE Title='"+nombreAlbum+"'";
+                    Statement statement = conexion.createStatement();
+                    statement.executeUpdate(sql);
+                } catch (SQLException ex) {
+                    System.out.println("Error al hacer el select");
+                    ex.printStackTrace();
+                }
+            } catch (SQLException ex2) {
+                System.out.println("Error al hacer el select: " + ex2.getMessage());
+            }
+        });
+
+        actualizarAlbum.addActionListener(e -> {
+            try {
+                ejecutarSQLDesdeArchivo("chinook.sql");
+                Connection conexion = DriverManager.getConnection(URL);
+                String nuevoNombre=JOptionPane.showInputDialog(null, "Introduce el nuevo nombre del album : ");
+                String antiguoNombre=JOptionPane.showInputDialog(null, "Introduce el del album que quieras actualizar : ");
+
+                try {
+                    String sql = "UPDATE albums SET Title='"+nuevoNombre+"' WHERE Title='"+antiguoNombre+"'";
+                    Statement statement = conexion.createStatement();
+                    statement.executeUpdate(sql);
+                } catch (SQLException ex) {
+                    System.out.println("Error al hacer el select");
+                    ex.printStackTrace();
+                }
+
+            } catch (SQLException e3) {
+                System.out.println("Conexion no exitosa");
             }
         });
     }

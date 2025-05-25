@@ -35,6 +35,7 @@ public class Vista {
     private JButton exportar;
     private JPanel datos;
     private JButton insertarJson;
+    private JButton btnEditarUsuario;
 
 
     private boolean fotoYaSubida = false;
@@ -81,7 +82,7 @@ public class Vista {
             Connection conexion = DriverManager.getConnection(URL);
             System.out.println("¡Conexión exitosa!");
             ejecutarSQLDesdeArchivo("usuarios.sql");
-
+            System.out.println("SQL exitosa!");
             JFrame frame = new JFrame("Agenda Contactos");
             frame.setContentPane(panel1);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,29 +141,22 @@ public class Vista {
                     File imagen = fileChooser.getSelectedFile();
                     String rutaImagen = imagen.getAbsolutePath();
 
-                    // Escalar la imagen para ajustarla al tamaño del JLabel
                     ImageIcon original = new ImageIcon(rutaImagen);
                     Image escalada = original.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
                     ImageIcon iconoFinal = new ImageIcon(escalada);
 
-                    // Actualizar el mapa de fotos y el JLabel
                     fotosPorContacto.put(contactoActual, iconoFinal);
                     fotoLabel.setIcon(iconoFinal);
 
-                    // Ocultar el botón después de subir la foto
                     subirFotoButton.setVisible(false);
                     fotoYaSubida = true;
 
-                    // Guardar la ruta de la imagen en la base de datos
                     String nombreContacto = contactoActual.getText().trim();
                     insertarRutaFotoBD(conexion, nombreContacto, rutaImagen);
 
-                    // Limpiar la selección actual
                     contactoActual = null;
                 }
             });
-
-
 
             eliminarContacto.addActionListener(e -> {
                 if (contactoActual == null) {
@@ -170,7 +164,7 @@ public class Vista {
                     return;
                 }
 
-                String nombreContacto = contactoActual.getText().trim(); // ← Guardar antes de borrar
+                String nombreContacto = contactoActual.getText().trim();
                 if (nombreContacto.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "El contacto no tiene un nombre válido.");
                     return;
@@ -183,17 +177,15 @@ public class Vista {
                         try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
                             pstmt.setString(1, nombreContacto);
                             int rowsAffected = pstmt.executeUpdate();
-                            if (rowsAffected > 0) {
+                            if (rowsAffected > 0)
                                 JOptionPane.showMessageDialog(null, "Contacto eliminado con éxito.");
-                            } else {
+                            else 
                                 JOptionPane.showMessageDialog(null, "No se encontró el contacto en la base de datos.");
-                            }
                         }
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, "Error al eliminar el contacto: " + ex.getMessage());
                     }
 
-                    // Limpiar campos en UI
                     contactoActual.setText("");
                     if (contactoActual == nombre1) {
                         tlfn1.setText("");
@@ -216,7 +208,6 @@ public class Vista {
                 }
             });
 
-
             exportar.addActionListener(e -> {
                 ArrayList<Usuarios> us = new ArrayList<>();
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -225,7 +216,7 @@ public class Vista {
                 JTextArea[] telefonos = {tlfn1, tlfn2, tlfn3, tlfn4};
                 JTextArea[] correos = {correo1, correo2, correo3, correo4};
 
-                for (int i = 0; i < 4; i++) {
+                for (int i=0; i<4; i++) {
                     String nombre = nombres[i].getText().trim();
                     String telefono = telefonos[i].getText().trim();
                     String correo = correos[i].getText().trim();
@@ -234,15 +225,13 @@ public class Vista {
                         String rutaFoto = "";
                         ImageIcon icon = fotosPorContacto.get(nombres[i]);
                         if (icon != null) {
-                            // Obtener ruta de la foto desde la base de datos
                             try  {
                                 String sql = "SELECT foto FROM usuarios WHERE nombre = ?";
                                 try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
                                     pstmt.setString(1, nombre);
                                     try (ResultSet rs = pstmt.executeQuery()) {
-                                        if (rs.next()) {
+                                        if (rs.next()) 
                                             rutaFoto = rs.getString("foto");
-                                        }
                                     }
                                 }
                             } catch (SQLException ex) {
@@ -288,8 +277,7 @@ public class Vista {
                                 telefonos[i].setText(String.valueOf(u.getNumero()));
                                 correos[i].setText(u.getCorreo());
 
-                                try (PreparedStatement pstmt = conexion.prepareStatement(
-                                        "INSERT INTO usuarios (nombre, numero, correo, foto) VALUES (?, ?, ?, ?)")) {
+                                try (PreparedStatement pstmt = conexion.prepareStatement("INSERT INTO usuarios (nombre, numero, correo, foto) VALUES (?, ?, ?, ?)")) {
                                     pstmt.setString(1, u.getNombre());
                                     pstmt.setInt(2, u.getNumero());
                                     pstmt.setString(3, u.getCorreo());
@@ -318,6 +306,9 @@ public class Vista {
                 }
             });
 
+            btnEditarUsuario.addActionListener(e -> {
+                editarUsuario();
+            });
 
             datos.setLayout(new BoxLayout(datos, BoxLayout.Y_AXIS));
             setupNombreClickListeners();
@@ -327,9 +318,72 @@ public class Vista {
         }
     }
 
+    private void editarUsuario() {
+        try {
+            Connection conexion = DriverManager.getConnection(URL);
+            String[] opciones = {"Contacto 1", "Contacto 2", "Contacto 3", "Contacto 4"};
+            int seleccion = JOptionPane.showOptionDialog(null, "¿Qué contacto deseas editar?", "Editar Usuario", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]);
+
+            if (seleccion == -1)
+                return;
+
+            JTextArea nombre = null, tlfn = null, correo = null;
+
+            switch (seleccion) {
+                case 0 -> { nombre = nombre1; tlfn = tlfn1; correo = correo1; }
+                case 1 -> { nombre = nombre2; tlfn = tlfn2; correo = correo2; }
+                case 2 -> { nombre = nombre3; tlfn = tlfn3; correo = correo3; }
+                case 3 -> { nombre = nombre4; tlfn = tlfn4; correo = correo4; }
+            }
+
+            if (nombre.getText().trim().isEmpty() && tlfn.getText().trim().isEmpty() && correo.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Este contacto está vacío y no se puede editar.",  "Contacto Vacío", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            JTextField nuevoNombre = new JTextField(nombre.getText());
+            JTextField nuevoTelefono = new JTextField(tlfn.getText());
+            JTextField nuevoCorreo = new JTextField(correo.getText());
+
+            JPanel panel = new JPanel(new GridLayout(0, 1));
+            panel.add(new JLabel("Nombre:"));
+            panel.add(nuevoNombre);
+            panel.add(new JLabel("Teléfono:"));
+            panel.add(nuevoTelefono);
+            panel.add(new JLabel("Correo:"));
+            panel.add(nuevoCorreo);
+
+            int result = JOptionPane.showConfirmDialog(null, panel, "Editar Contacto", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+            if (result == JOptionPane.OK_OPTION) {
+                String nombreNuevo = nuevoNombre.getText();
+                String telefonoNuevo = nuevoTelefono.getText();
+                String correoNuevo = nuevoCorreo.getText();
+
+                nombre.setText(nombreNuevo);
+                tlfn.setText(telefonoNuevo);
+                correo.setText(correoNuevo);
+
+                try {
+                    PreparedStatement stmt = conexion.prepareStatement("UPDATE usuarios SET nombre = ?, numero = ?, correo = ? WHERE id = ?" );
+                    stmt.setString(1, nombreNuevo);
+                    stmt.setString(2, telefonoNuevo);
+                    stmt.setString(3, correoNuevo);
+                    stmt.setInt(4, seleccion + 1);
+                    stmt.executeUpdate();
+                    stmt.close();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Error al actualizar en la base de datos: " + ex.getMessage(), "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+
+        }
+    }
+
     private void insertarRutaFotoBD(Connection conexion, String nombre, String rutaImagen) {
         try {
-            // Preparar la sentencia SQL para actualizar la ruta de la foto
             String sql = "UPDATE usuarios SET foto = ? WHERE nombre = ?";
             try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
                 pstmt.setString(1, rutaImagen);
@@ -354,7 +408,7 @@ public class Vista {
                 pstmt.setString(1, nombre);
                 pstmt.setInt(2, telefonoInt);
                 pstmt.setString(3, correo);
-                pstmt.setString(4, ""); // por ahora sin foto
+                pstmt.setString(4, "");
                 pstmt.executeUpdate();
             }
             return true;
@@ -394,8 +448,6 @@ public class Vista {
         }
     }
 
-
-
     private void setupNombreClickListeners() {
         JTextArea[] nombres = {nombre1, nombre2, nombre3, nombre4};
         JTextArea[] telefonos = {tlfn1, tlfn2, tlfn3, tlfn4};
@@ -406,25 +458,21 @@ public class Vista {
             nombres[i].addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    contactoActual = nombres[index];  // guardar cuál contacto está activo
-                    datos.removeAll();  // limpiar el panel
+                    contactoActual = nombres[index];
+                    datos.removeAll();
 
-                    // Mostrar la foto
                     ImageIcon icon = fotosPorContacto.get(nombres[index]);
-                    if (icon != null) {
+                    if (icon != null)
                         fotoLabel.setIcon(icon);
-                    } else {
+                    else
                         fotoLabel.setIcon(null);
-                    }
 
-                    // Añadir los componentes al panel `datos`
                     datos.add(fotoLabel);
 
                     JLabel nombreLabel = new JLabel("Nombre: " + nombres[index].getText());
                     JLabel telefonoLabel = new JLabel("Teléfono: " + telefonos[index].getText());
                     JLabel correoLabel = new JLabel("Correo: " + correos[index].getText());
 
-                    // Espaciado opcional
                     nombreLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
                     telefonoLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
                     correoLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
@@ -433,14 +481,12 @@ public class Vista {
                     datos.add(telefonoLabel);
                     datos.add(correoLabel);
 
-                    datos.revalidate();  // actualizar el layout
-                    datos.repaint();     // redibujar
+                    datos.revalidate();
+                    datos.repaint();
                 }
             });
         }
     }
-
-
 
     private boolean isEmpty(JTextArea area) {
         return area.getText().trim().isEmpty();

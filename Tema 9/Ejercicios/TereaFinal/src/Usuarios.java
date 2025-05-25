@@ -2,7 +2,7 @@ public class Usuarios {
     private String nombre;
     private int numero;
     private String correo;
-    private String foto; // nueva propiedad
+    private String foto;
 
     public Usuarios(String nombre, int numero, String correo) {
         this.nombre = nombre;

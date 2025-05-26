@@ -91,7 +91,6 @@ public class Vista {
             frame.setVisible(true);
 
             subirFotoButton.setVisible(false);
-
             cargarContactosDesdeDB(conexion);
 
             agregarContacto.addActionListener(e -> {
@@ -238,7 +237,6 @@ public class Vista {
                                 JOptionPane.showMessageDialog(null, "Error al obtener ruta de foto: " + ex.getMessage());
                             }
                         }
-
                         try {
                             int telefonoInt = Integer.parseInt(telefono);
                             us.add(new Usuarios(nombre, telefonoInt, correo,rutaFoto));
@@ -247,7 +245,6 @@ public class Vista {
                         }
                     }
                 }
-
                 String usuariosJSON = gson.toJson(us);
 
                 try (FileWriter fw = new FileWriter("usuarios.json")) {
@@ -294,11 +291,9 @@ public class Vista {
                             break;
                         }
                     }
-
-                    if (insertados > 0) {
+                    if (insertados > 0)
                         JOptionPane.showMessageDialog(null, insertados + " contactos insertados desde JSON.");
-                    }
-
+                    
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "Error al leer el archivo JSON: " + ex.getMessage());
                 } catch (SQLException ex) {
@@ -318,6 +313,10 @@ public class Vista {
         }
     }
 
+    /**
+     * Metodo para editar un usuario
+     * Si la posicion del usuario está vacia no se puede editar
+     */
     private void editarUsuario() {
         try {
             Connection conexion = DriverManager.getConnection(URL);
@@ -340,11 +339,9 @@ public class Vista {
                 JOptionPane.showMessageDialog(null, "Este contacto está vacío y no se puede editar.",  "Contacto Vacío", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-
             JTextField nuevoNombre = new JTextField(nombre.getText());
             JTextField nuevoTelefono = new JTextField(tlfn.getText());
             JTextField nuevoCorreo = new JTextField(correo.getText());
-
             JPanel panel = new JPanel(new GridLayout(0, 1));
             panel.add(new JLabel("Nombre:"));
             panel.add(nuevoNombre);
@@ -352,7 +349,6 @@ public class Vista {
             panel.add(nuevoTelefono);
             panel.add(new JLabel("Correo:"));
             panel.add(nuevoCorreo);
-
             int result = JOptionPane.showConfirmDialog(null, panel, "Editar Contacto", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (result == JOptionPane.OK_OPTION) {
@@ -378,10 +374,15 @@ public class Vista {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-
         }
     }
 
+    /**
+     * Metodo para insertar ruta de la foto a la DB
+     * @param conexion
+     * @param nombre
+     * @param rutaImagen
+     */
     private void insertarRutaFotoBD(Connection conexion, String nombre, String rutaImagen) {
         try {
             String sql = "UPDATE usuarios SET foto = ? WHERE nombre = ?";
@@ -395,6 +396,19 @@ public class Vista {
         }
     }
 
+    /**
+     * Metodo para insertar contactos
+     * @param nombreArea
+     * @param tlfnArea
+     * @param correoArea
+     * @param nombre
+     * @param telefono
+     * @param correo
+     * @param conexion
+     * @param telefonoInt
+     * @return
+     * @throws SQLException
+     */
     private boolean insertarContactoSiVacio(JTextArea nombreArea, JTextArea tlfnArea, JTextArea correoArea, String nombre, String telefono, String correo, Connection conexion, int telefonoInt) throws SQLException {
         if (isEmpty(nombreArea)) {
             nombreArea.setText(nombre);
@@ -416,6 +430,10 @@ public class Vista {
         return false;
     }
 
+    /**
+     * Metodo para cargar contactos desde la base de datos
+     * @param conexion
+     */
     private void cargarContactosDesdeDB(Connection conexion) {
         JTextArea[] nombres = {nombre1, nombre2, nombre3, nombre4};
         JTextArea[] telefonos = {tlfn1, tlfn2, tlfn3, tlfn4};
@@ -440,7 +458,6 @@ public class Vista {
                     Image escalada = original.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
                     fotosPorContacto.put(nombres[index], new ImageIcon(escalada));
                 }
-
                 index++;
             }
         } catch (SQLException e) {
